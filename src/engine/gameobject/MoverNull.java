@@ -4,7 +4,7 @@ import engine.pathfinding.EndOfPathException;
 
 public class MoverNull implements Mover {
 	@Override
-	public PointSimple move(PointSimple current) throws EndOfPathException {
+	public PointSimple move(PointSimple current, double distance) throws EndOfPathException {
 		return current;
 	}
 

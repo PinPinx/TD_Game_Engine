@@ -21,7 +21,7 @@ public class MoverDirection extends MoverPoint{
     }
     
     @Override
-    public PointSimple move (PointSimple current) throws EndOfPathException{
+    public PointSimple move (PointSimple current, double distance) throws EndOfPathException{
         distanceTraveled += currentSpeed();
         if(distanceTraveled>distanceLimit)
             throw new EndOfPathException();

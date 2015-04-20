@@ -21,7 +21,7 @@ public interface Mover {
      * @return point of the destination
      * @throws EndOfPathException if unit can move no longer
      */
-    public PointSimple move (PointSimple current) throws EndOfPathException;
+    public PointSimple move (PointSimple current, double distance) throws EndOfPathException;
 
     @Settable
     public void setSpeed (double speed);

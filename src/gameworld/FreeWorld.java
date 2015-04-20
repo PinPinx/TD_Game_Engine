@@ -16,7 +16,7 @@ import engine.gameobject.test.TestTower;
 import engine.gameobject.units.Buffable;
 import engine.gameobject.weapon.firingstrategy.Buffer;
 import engine.grid.Grid;
-import engine.grid.GridCell;
+import voogasalad.util.pathsearch.graph.GridCell;
 import engine.grid.GridFree;
 import engine.interactions.InteractionEngine;
 import engine.pathfinding.EndOfPathException;
@@ -36,7 +36,7 @@ public class FreeWorld extends AbstractWorld {
 	public FreeWorld(int numRows, int numCols){
 //		myGrid = (List<GameObject>[][]) new LinkedList<?>[numRows][numCols];
 		myGrid = new GameObject[numRows][numCols];
-		myTransform = new CoordinateTransformer(numRows, numCols, 1000, 1000); //TODO fix window 1000 1000 measurements
+		myTransform = new CoordinateTransformer(numRows, numCols, 500, 500); //TODO fix window 1000 1000 measurements
 	}
 
     @Override
@@ -44,7 +44,7 @@ public class FreeWorld extends AbstractWorld {
 		if(!isPlacable(toSpawn.getGraphic().getNode(),pixelCoords)){
 			throw new StructurePlacementException();
 		}
-		GridCell c = myTransform.transformWorldToGrid(toSpawn.getPoint());
+		GridCell c = myTransform.transformWorldToGrid(pixelCoords);
 		myGrid[c.getRow()][c.getCol()] = toSpawn;
         super.addObject(toSpawn);
         toSpawn.setPoint(myTransform.tranformGridToWorld(c));

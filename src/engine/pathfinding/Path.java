@@ -2,7 +2,6 @@ package engine.pathfinding;
 
 import engine.gameobject.GameObject;
 import engine.gameobject.PointSimple;
-import engine.grid.GridCell;
 import javafx.geometry.Point2D;
 
 /**
@@ -21,7 +20,7 @@ public interface Path {
 	 * @return point of the next destination
 	 * @throws EndOfPathException if no more points exist on the path
 	 */
-	public PointSimple getNextLocation(double distance)
+	public PointSimple getNextLocation(double distance, PointSimple current)
 			throws EndOfPathException;
 
 	/**
