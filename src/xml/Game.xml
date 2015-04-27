@@ -62,54 +62,6 @@
                   <myAction class="null"/>
                   <myWorld class="gameworld.FixedWorld">
                     <myObjects/>
-                    <myCollisionEngine class="engine.interactions.CollisionEngine">
-                      <myTable>
-                        <entry>
-                          <engine.gameobject.test.ProjectileLabel>
-                            <superType class="engine.gameobject.labels.TypeBase">
-                              <myName>Base</myName>
-                            </superType>
-                            <myName>Projectile</myName>
-                          </engine.gameobject.test.ProjectileLabel>
-                          <map>
-                            <entry>
-                              <engine.gameobject.test.EnemyLabel>
-                                <superType class="engine.gameobject.labels.TypeBase">
-                                  <myName>Base</myName>
-                                </superType>
-                                <myName>Enemy</myName>
-                              </engine.gameobject.test.EnemyLabel>
-                              <engine.interactions.BuffImparter/>
-                            </entry>
-                          </map>
-                        </entry>
-                      </myTable>
-                      <myGameWorld class="gameworld.FixedWorld" reference="../.."/>
-                    </myCollisionEngine>
-                    <myRangeEngine class="engine.interactions.RangeEngine">
-                      <myTable>
-                        <entry>
-                          <engine.gameobject.test.TowerLabel>
-                            <superType class="engine.gameobject.labels.TypeBase">
-                              <myName>Base</myName>
-                            </superType>
-                            <myName>Tower</myName>
-                          </engine.gameobject.test.TowerLabel>
-                          <map>
-                            <entry>
-                              <engine.gameobject.test.EnemyLabel>
-                                <superType class="engine.gameobject.labels.TypeBase">
-                                  <myName>Base</myName>
-                                </superType>
-                                <myName>Enemy</myName>
-                              </engine.gameobject.test.EnemyLabel>
-                              <engine.interactions.ShootAt/>
-                            </entry>
-                          </map>
-                        </entry>
-                      </myTable>
-                      <myGameWorld class="gameworld.FixedWorld" reference="../.."/>
-                    </myRangeEngine>
                     <myNodeToGameObjectMap/>
                     <myPath class="engine.pathfinding.PathFixed">
                       <myPathSegments class="linked-list">
@@ -12671,16 +12623,16 @@
                   <myFrameDuration>2400</myFrameDuration>
                   <myFramesSinceStart>0</myFramesSinceStart>
                   <myReleaseTimes>
-                    <int>1655</int>
-                    <int>1378</int>
-                    <int>1406</int>
-                    <int>1897</int>
-                    <int>572</int>
-                    <int>842</int>
-                    <int>2155</int>
-                    <int>1097</int>
-                    <int>661</int>
-                    <int>902</int>
+                    <int>1898</int>
+                    <int>2116</int>
+                    <int>700</int>
+                    <int>384</int>
+                    <int>899</int>
+                    <int>1803</int>
+                    <int>75</int>
+                    <int>472</int>
+                    <int>1921</int>
+                    <int>1898</int>
                   </myReleaseTimes>
                 </engine.events.RandomSpanWave>
                 <engine.events.ConstantSpacingWave>
@@ -18511,54 +18463,6 @@
         <myLosingGoals reference="../../engine.game.ConcreteLevel/myLosingGoals"/>
         <myGameWorld class="gameworld.FixedWorld">
           <myObjects/>
-          <myCollisionEngine class="engine.interactions.CollisionEngine">
-            <myTable>
-              <entry>
-                <engine.gameobject.test.ProjectileLabel>
-                  <superType class="engine.gameobject.labels.TypeBase">
-                    <myName>Base</myName>
-                  </superType>
-                  <myName>Projectile</myName>
-                </engine.gameobject.test.ProjectileLabel>
-                <map>
-                  <entry>
-                    <engine.gameobject.test.EnemyLabel>
-                      <superType class="engine.gameobject.labels.TypeBase">
-                        <myName>Base</myName>
-                      </superType>
-                      <myName>Enemy</myName>
-                    </engine.gameobject.test.EnemyLabel>
-                    <engine.interactions.BuffImparter/>
-                  </entry>
-                </map>
-              </entry>
-            </myTable>
-            <myGameWorld class="gameworld.FixedWorld" reference="../.."/>
-          </myCollisionEngine>
-          <myRangeEngine class="engine.interactions.RangeEngine">
-            <myTable>
-              <entry>
-                <engine.gameobject.test.TowerLabel>
-                  <superType class="engine.gameobject.labels.TypeBase">
-                    <myName>Base</myName>
-                  </superType>
-                  <myName>Tower</myName>
-                </engine.gameobject.test.TowerLabel>
-                <map>
-                  <entry>
-                    <engine.gameobject.test.EnemyLabel>
-                      <superType class="engine.gameobject.labels.TypeBase">
-                        <myName>Base</myName>
-                      </superType>
-                      <myName>Enemy</myName>
-                    </engine.gameobject.test.EnemyLabel>
-                    <engine.interactions.ShootAt/>
-                  </entry>
-                </map>
-              </entry>
-            </myTable>
-            <myGameWorld class="gameworld.FixedWorld" reference="../.."/>
-          </myRangeEngine>
           <myNodeToGameObjectMap/>
           <myTerrain>
             <myMatrix>
@@ -19452,9 +19356,9 @@
               </upgradeMap>
               <obsSet class="com.sun.javafx.collections.ObservableSetWrapper">
                 <backingSet>
+                  <engine.gameobject.weapon.range.RangeUpgrade reference="../../../../myRange"/>
                   <engine.gameobject.weapon.firingrate.FiringRateUpgrade reference="../../../../myFiringRate"/>
                   <engine.gameobject.units.directdamage.DamageBuff reference="../../../../myProjectile/myCollider/collisionBuffs/engine.gameobject.units.directdamage.DamageBuff"/>
-                  <engine.gameobject.weapon.range.RangeUpgrade reference="../../../../myRange"/>
                 </backingSet>
                 <listenerHelper class="com.sun.javafx.collections.SetListenerHelper$SingleChange">
                   <listener class="null"/>

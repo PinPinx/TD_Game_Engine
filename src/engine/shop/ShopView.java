@@ -184,7 +184,10 @@ public class ShopView extends Parent {
         Button sellButton = new Button(String.format("Sell for: %d",
                                                      Math.round(gameObject.getValue())));
         base.getChildren().add(sellButton);
-        sellButton.setOnAction(event -> model.sellGameObject(gameObject));
+        sellButton.setOnAction(event -> {
+            model.sellGameObject(gameObject);
+            //removeFromInfoBox();
+        });
         addToInfoBox(base);
     }
 
