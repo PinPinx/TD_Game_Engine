@@ -302,7 +302,7 @@ public class GameObjectSimple implements GameObject {
         return myHealth;
     }
     
-    private void setRangeDisplay (RangeDisplay rangeDisplay) {
+    public void setRangeDisplay (RangeDisplay rangeDisplay) {
         myRangeDisplay = rangeDisplay;
     }
 
