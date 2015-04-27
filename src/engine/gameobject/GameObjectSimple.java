@@ -150,14 +150,15 @@ public class GameObjectSimple implements GameObject {
     public GameObject clone () {
         GameObjectSimple clone = new GameObjectSimple();
         clone.setLabel(myType);
+        clone.setGraphic(myGraphic.clone());
+        clone.setShopTag(myShopTag.clone());
         clone.setPoint(new PointSimple(myPoint));
         clone.setHealth(myHealth.clone());
         clone.setWeapon(myWeapon.clone());
         clone.setCollider(myCollider.clone());
         clone.setMover(myMover.clone());
-        clone.setGraphic(myGraphic.clone());
-        clone.setShopTag(myShopTag.clone());
         clone.myBehaviors = myBehaviors;//TODO: ??????????
+        clone.setRangeDisplay(myRangeDisplay.clone());
         return clone;
     }
 
@@ -299,6 +300,10 @@ public class GameObjectSimple implements GameObject {
     @Override
     public Health getHealth () {
         return myHealth;
+    }
+    
+    private void setRangeDisplay (RangeDisplay rangeDisplay) {
+        myRangeDisplay = rangeDisplay;
     }
 
 }

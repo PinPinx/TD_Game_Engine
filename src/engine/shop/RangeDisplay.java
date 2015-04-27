@@ -30,11 +30,18 @@ public class RangeDisplay {
     private Circle rangeDetection;
     @XStreamOmitField
     private transient StackPane pane;
+    private DoubleProperty range;
+    
+    public RangeDisplay clone () {
+        RangeDisplay clone = new RangeDisplay(name, graphic.clone(), range);
+        return clone;
+    }
 
     public RangeDisplay (String name, Graphic myGraphic, DoubleProperty range) {
         this.pane = new StackPane();
         this.name = name;
         this.graphic = myGraphic;
+        this.range = range;
         range.addListener((obs, ov, nv) -> initialize(range.get()));
         initialize(range.get());
     }
