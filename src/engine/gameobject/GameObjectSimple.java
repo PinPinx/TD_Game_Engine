@@ -36,6 +36,7 @@ public class GameObjectSimple implements GameObject {
     private BehaviorTracker myBehaviors;
     private Graphic myGraphic;
     private ShopTag myShopTag;
+    private RangeDisplay myRangeDisplay;
 
     public GameObjectSimple () {
         myType = new SimpleType();
@@ -48,6 +49,7 @@ public class GameObjectSimple implements GameObject {
         myBehaviors = new BehaviorTracker();
         myGraphic = new Graphic();
         myShopTag = new ShopTagSimple();
+        myRangeDisplay = new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
     }
 
     /*
@@ -74,6 +76,7 @@ public class GameObjectSimple implements GameObject {
     @Settable
     public void setWeapon (Weapon weapon) {
         myWeapon = weapon;
+        myRangeDisplay = new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
     }
 
     @Override
@@ -275,7 +278,7 @@ public class GameObjectSimple implements GameObject {
 
     @Override
     public RangeDisplay getRangeDisplay () {
-        return new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
+        return myRangeDisplay;
     }
 
     @Override
