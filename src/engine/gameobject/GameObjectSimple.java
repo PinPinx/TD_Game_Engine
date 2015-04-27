@@ -36,7 +36,7 @@ public class GameObjectSimple implements GameObject {
     private BehaviorTracker myBehaviors;
     private Graphic myGraphic;
     private ShopTag myShopTag;
-    private RangeDisplay myRangeDisplay;
+    //private RangeDisplay myRangeDisplay;
 
     public GameObjectSimple () {
         myType = new SimpleType();
@@ -49,7 +49,7 @@ public class GameObjectSimple implements GameObject {
         myBehaviors = new BehaviorTracker();
         myGraphic = new Graphic();
         myShopTag = new ShopTagSimple();
-        myRangeDisplay = new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
+        //myRangeDisplay = new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
     }
 
     /*
@@ -76,7 +76,7 @@ public class GameObjectSimple implements GameObject {
     @Settable
     public void setWeapon (Weapon weapon) {
         myWeapon = weapon;
-        myRangeDisplay = new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
+        //myRangeDisplay = new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
     }
 
     @Override
@@ -158,7 +158,7 @@ public class GameObjectSimple implements GameObject {
         clone.setCollider(myCollider.clone());
         clone.setMover(myMover.clone());
         clone.myBehaviors = myBehaviors;//TODO: ??????????
-        clone.setRangeDisplay(myRangeDisplay.clone());
+        //clone.setRangeDisplay(myRangeDisplay.clone());
         return clone;
     }
 
@@ -279,7 +279,8 @@ public class GameObjectSimple implements GameObject {
 
     @Override
     public RangeDisplay getRangeDisplay () {
-        return myRangeDisplay;
+        //return myRangeDisplay;
+        return new RangeDisplay(getName(), myGraphic, myWeapon.getRangeProperty());
     }
 
     @Override
@@ -302,8 +303,8 @@ public class GameObjectSimple implements GameObject {
         return myHealth;
     }
     
-    public void setRangeDisplay (RangeDisplay rangeDisplay) {
-        myRangeDisplay = rangeDisplay;
-    }
+//    public void setRangeDisplay (RangeDisplay rangeDisplay) {
+//        myRangeDisplay = rangeDisplay;
+//    }
 
 }
