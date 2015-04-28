@@ -37,7 +37,6 @@ public class GameObjectSelector {
     private void initialize () {
         current.addListener( (obs, old, cur) -> {
             removeSelf.run();
-            select(null);
             if (prev !=null){
                 worldPane.getChildren().remove(prev);
             }
