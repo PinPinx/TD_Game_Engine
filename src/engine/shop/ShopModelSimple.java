@@ -135,7 +135,7 @@ public class ShopModelSimple implements ShopModel {
     @Override
     public void sellGameObject (GameObject obj) {
         currentPlayer.getWallet().deposit(obj.getValue());
-        //myGameWorld.
+        //myGameWorld.removeObject(obj);
     }
 
     /**
