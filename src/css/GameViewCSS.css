@@ -111,24 +111,21 @@
 }
 
 .titled-pane .title .text{
-  -fx-font-weight:normal;
-  -fx-text-fill:black;
+  -fx-font-weight: normal;
+  -fx-text-fill: black;
 }
 
 .inner-titled-pane {
   /*-fx-background-color: linear-gradient(to bottom, #e6e6e6, #CFCFCF);*/
   -fx-label-padding: 0 0 0 20;
-  -fx-font-weight:italic;
 }
 
 .inner-titled-pane .title{
   -fx-background-color: linear-gradient(to left, #e6e6e6, #CFCFCF);
-  -fx-font-weight:italic;
 }
 
 .inner-titled-pane .title .text{
-  -fx-font-weight:italic;
-  -fx-text-fill:black;
+  -fx-text-fill: black;
 }
 
 /*.innter-titled-pane > .title > .arrow-button > .arrow{

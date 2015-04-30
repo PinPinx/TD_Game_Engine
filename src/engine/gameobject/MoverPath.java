@@ -14,7 +14,7 @@ import engine.pathfinding.PathFixed;
  */
 @Settable
 public class MoverPath extends BasicMover {
-	Path myPath;
+	private Path myPath;
 	
 	public MoverPath() {
 	    super(0);
