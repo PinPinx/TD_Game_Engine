@@ -54,7 +54,7 @@ import javafx.stage.Stage;
  */
 public class LevelView {
     private static final String DEFAULT_IMAGE_PATH = "/images/Park_Path.png";
-    private static final Dimension DEFAULT_GRID_DIMENSIONS = new Dimension(20, 20);
+    private static final Dimension DEFAULT_GRID_DIMENSIONS = new Dimension(10, 10);
     private static final int TEXT_BOX_WIDTH = 100;
     private StackPane stack;
     private Scene scene;

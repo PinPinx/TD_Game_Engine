@@ -17,9 +17,9 @@ import engine.pathfinding.PathSegmentBezier;
  * @author Jeremy
  *
  */
-public class GameObjectSimpleTest extends GameObjectSimple {
+public class GameObjectSimpleTest2 extends GameObjectSimple {
 
-    public GameObjectSimpleTest () {
+    public GameObjectSimpleTest2 () {
         super();
         setLabel(new EnemyLabel());
         setGraphic(new Graphic(25, 25, "/images/robertDuvall.jpg"));
@@ -28,12 +28,7 @@ public class GameObjectSimpleTest extends GameObjectSimple {
                                              // be fixed in a better manner.
         setHealth(new HealthSimple(4));
         setWeapon(new NullWeapon());
-//        PathFixed myPath = new PathFixed();
-//        myPath = DataManager.readFromXML(PathFixed.class, "src/xml/Path.xml");
-        // XStream xstream = new XStream(new DomDriver());
-        // File file = new File("src/gae/listView/Test.xml");
-        // myPath = (PathFixed) xstream.fromXML(file);
-//        setMover(new MoverPath(myPath, 1));
+        
     }
 
 }

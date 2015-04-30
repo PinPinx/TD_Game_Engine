@@ -40,6 +40,11 @@ public class PathFree implements Path {
 //        spawnPoints.add(new GridCell(4, 4));
         bounds = new GridCell(matrix.length, matrix[0].length);
         obstacles = new ArrayList<>();
+        try {
+			updatePath();
+		} catch (NoPathExistsException e) {
+			e.printStackTrace();
+		}
     }
 
     @Override

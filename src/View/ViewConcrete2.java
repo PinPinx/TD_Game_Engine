@@ -176,6 +176,7 @@ public class ViewConcrete2 implements EngineView, Observer, ChangeableSpeed, Pla
     private void executeFrameActions () {
         // after updating game, how to update after level ends? need to look into checking something
         // like gameEnded()
+    	System.out.println("update"+Math.random());
         myGame.update();
         addInitialObjects();
         myButtonList.forEach(e -> {
@@ -221,9 +222,9 @@ public class ViewConcrete2 implements EngineView, Observer, ChangeableSpeed, Pla
                 }
                 if (myLevelBoard.isLost())
                     myEndScreen.setResultsText("YOU LOST");
-                else if (myLevelBoard.isWon())
-                    myEndScreen.setResultsText("YOU WON");
-                myEndScreen.setScene();
+                else if (myLevelBoard.isWon()){}
+//                    myEndScreen.setResultsText("YOU WON");
+//                myEndScreen.setScene();
             }
             else {
                 myLevelBoard.startNextLevel();

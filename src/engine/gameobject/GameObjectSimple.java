@@ -164,9 +164,11 @@ public class GameObjectSimple implements GameObject {
      */
     @Override
     public void move () throws EndOfPathException {
+    	System.out.println(myPoint);
         PointSimple point = myMover.move(myPoint);
         myGraphic.rotate(point);
-        setPoint(new PointSimple(point.getX(), point.getY()));
+        myPoint.setPoint(point);
+//        setPoint(point);
     }
 
     @Override
@@ -221,13 +223,13 @@ public class GameObjectSimple implements GameObject {
 
     @Override
     public PointSimple getPoint () {
-        return new PointSimple(myPoint);
+        return myPoint;
     }
 
     @Override
     @Settable
     public void setPoint (PointSimple point) {
-        myPoint = point;
+        myPoint.setPoint(point);;
         myGraphic.setPoint(point);
     }
 
