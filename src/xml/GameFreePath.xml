@@ -21,13 +21,17 @@
     <myName>PlayerName</myName>
     <myHealth>
       <changed>false</changed>
-      <obs/>
+      <obs>
+        <engine.game.Player reference="../../.."/>
+      </obs>
       <myValue>100.0</myValue>
       <myLabel>Health</myLabel>
     </myHealth>
     <myScore>
       <changed>false</changed>
-      <obs/>
+      <obs>
+        <engine.game.Player reference="../../.."/>
+      </obs>
       <myValue>100.0</myValue>
       <myLabel>Score</myLabel>
     </myScore>
@@ -17414,16 +17418,16 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</hb>
                   <myFrameDuration>2400</myFrameDuration>
                   <myFramesSinceStart>0</myFramesSinceStart>
                   <myReleaseTimes>
-                    <int>736</int>
-                    <int>1883</int>
-                    <int>713</int>
-                    <int>2242</int>
-                    <int>549</int>
-                    <int>838</int>
-                    <int>900</int>
-                    <int>1725</int>
-                    <int>242</int>
-                    <int>435</int>
+                    <int>423</int>
+                    <int>383</int>
+                    <int>2227</int>
+                    <int>841</int>
+                    <int>320</int>
+                    <int>1592</int>
+                    <int>199</int>
+                    <int>89</int>
+                    <int>57</int>
+                    <int>1900</int>
                   </myReleaseTimes>
                 </engine.events.RandomSpanWave>
                 <engine.events.ConstantSpacingWave>
