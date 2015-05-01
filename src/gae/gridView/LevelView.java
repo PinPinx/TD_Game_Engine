@@ -80,6 +80,9 @@ public class LevelView {
         this.setSpawn = biconsumer;
         this.setWalkable = setWalkable;
         this.isFreeWorld = isFreeWorld;
+        
+        gridSizeProperty = new SimpleObjectProperty<>(DEFAULT_GRID_DIMENSIONS);
+
     }
 
     public Pane getBorder (Scene scene) {
@@ -110,7 +113,6 @@ public class LevelView {
             backgroundImage.imageProperty().set(new Image(backgroundPathProperty.get()));
             setLevelImage();
         });
-        gridSizeProperty = new SimpleObjectProperty<>(DEFAULT_GRID_DIMENSIONS);
         Pane root = new Pane();
         container = new TileViewToggle(gridSizeProperty, scene);
         container.getTileModeProperty().bind(tileModeProperty);

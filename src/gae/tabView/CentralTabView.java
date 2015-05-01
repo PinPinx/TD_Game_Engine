@@ -1,12 +1,14 @@
+// This entire file is part of my masterpiece.
+// John Gilhuly
+
 package gae.tabView;
 
-import engine.fieldsetting.Settable;
 import engine.game.Game;
 import engine.game.Level;
-import engine.game.Player;
 import engine.game.StoryBoard;
 import engine.shop.ShopModel;
-import gae.editor.EditingParser;
+import gae.backend.GameManager;
+import gae.backend.LevelFactory;
 import gae.gameView.InteractionTable;
 import gae.gameWorld.FixedGameWorldFactory;
 import gae.gameWorld.FreeGameWorldFactory;
@@ -20,7 +22,6 @@ import gameworld.AbstractWorld;
 import gameworld.FreeWorld;
 import gameworld.GameWorld;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -32,83 +33,102 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import voogasalad.util.pathsearch.graph.GridCell;
 
 
 /**
- * Central container for the central tab view in the gae editor
+ * Central container for the central tab view in the gae editor, and creator of the Game instance
+ * for xstreaming
  * 
  * @author JohnGilhuly
  *
  */
 
 public class CentralTabView implements UIObject {
+    private BooleanProperty isFreeWorld = new SimpleBooleanProperty();
+    private boolean editorInstantiated;
+    private boolean shopSet;
+    private int levelCount;
+
     private VBox baseNode;
     private TabPane tabView;
-    private int levelCount;
     private Scene scene;
-    private ITab hudTab;
-    private ITab shopTab;
-    private ITab gameObjectTab;
-    private ITab playerTab;
+    private ITab hudTab, shopTab, playerTab;
     private LevelView levelView;
+
     private LibraryData libraryData;
-    private Game game;
-    private Player player;
     private GameWorldFactory gameWorldFactory;
-    private boolean editorInstantiated;
     private FreeWorld freeworld;
-    private BooleanProperty isFreeWorld = new SimpleBooleanProperty();
     private ShopModel shopModel;
-    private boolean shopSet;
-    private AbstractWorld nextWorld;
+    private GameWorld nextWorld;
+
+    private GameManager gameManager;
+    private LevelFactory levelFactory;
 
     public CentralTabView (Scene sceneIn, Game gameIn, String gameTypeIn) {
         scene = sceneIn;
-        game = gameIn;
-        initialize(gameTypeIn);
+        gameManager = new GameManager(gameIn);
+
+        try {
+            initialize(gameTypeIn);
+        }
+        catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initialize (String gameTypeIn) {
+    private void initialize (String gameTypeIn) throws ClassNotFoundException,
+                                               IllegalAccessException, IllegalArgumentException,
+                                               InvocationTargetException {
+        levelFactory = new LevelFactory();
         libraryData = LibraryData.getInstance();
         levelCount = 1;
         shopSet = false;
+        gameWorldFactory = createGameWorldFactory(gameTypeIn);
 
+        createUI();
+        shopModel = ((ShopTab) shopTab).getShop();
+        gameManager.invokeSettableGameMethod("setShop", shopModel);
+        gameManager.invokeSettableGameMethod("setPlayer", ((PlayerTab) playerTab).getPlayer());
+    }
+
+    /**
+     * Creates central UI Elements
+     */
+    private void createUI () {
         baseNode = new VBox();
         tabView = new TabPane();
-        // refactor this code
+
         shopTab = new ShopTab();
         hudTab = new HudEditorTab(null);
-        gameObjectTab = new GameObjectEditorTab(scene, getConsumer(), getBiconsumer());
         playerTab = new PlayerTab();
 
         tabView.getTabs().addAll(shopTab.getBaseTabNode(), hudTab.getBaseTabNode(),
                                  playerTab.getBaseTabNode());
 
         Button newLevel = new Button("Add Level");
-        newLevel.setOnAction(e -> {
-            if (!editorInstantiated) {
-                GameObjectEditorTab gameObjectTab = new GameObjectEditorTab(scene, getConsumer(),
-                                                                            getBiconsumer());
-                tabView.getTabs().add(gameObjectTab.getBaseTabNode());
-                editorInstantiated = true;
-            }
-            createNewLevel();
-        });
+        newLevel.setOnAction(e -> createLevelButtonPressed());
 
         baseNode.getChildren().addAll(newLevel, tabView);
-        gameWorldFactory = createGameWorldFactory(gameTypeIn);
+    }
+
+    /**
+     * Called when the createLevel Button is pressed
+     */
+    private void createLevelButtonPressed () {
+        if (!editorInstantiated) {
+            GameObjectEditorTab gameObjectTab = new GameObjectEditorTab(scene, getConsumer(),
+                                                                        getBiconsumer());
+            tabView.getTabs().add(gameObjectTab.getBaseTabNode());
+            editorInstantiated = true;
+        }
 
         try {
-            setUpShopAndLinkToGame();
-            setUpPlayerAndLinkToGame();
+            createNewLevel();
         }
-        catch (ClassNotFoundException |
-                IllegalAccessException |
-                IllegalArgumentException |
-                InvocationTargetException e1) {
+        catch (Exception e1) {
             e1.printStackTrace();
         }
     }
@@ -129,81 +149,71 @@ public class CentralTabView implements UIObject {
     }
 
     /**
-     * Uses reflection to set up the ShopModel and link it to game
-     * 
-     * @throws ClassNotFoundException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
-     */
-    private void setUpShopAndLinkToGame ()
-                                          throws ClassNotFoundException, IllegalAccessException,
-                                          IllegalArgumentException,
-                                          InvocationTargetException {
-
-        shopModel = ((ShopTab) shopTab).getShop();
-
-        for (Method m : EditingParser.getMethodsWithAnnotation(Class.forName(game.getClass()
-                .getName()), Settable.class)) {
-            if (m.getName().equals("setShop")) {
-                m.invoke(game, shopModel);
-            }
-        }
-    }
-
-    /**
-     * Uses reflection to set up the Player and link it to game
-     * 
-     * @throws ClassNotFoundException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
-     */
-    private void setUpPlayerAndLinkToGame ()
-                                            throws ClassNotFoundException, IllegalAccessException,
-                                            IllegalArgumentException,
-                                            InvocationTargetException {
-
-        player = ((PlayerTab) playerTab).getPlayer();
-
-        for (Method m : EditingParser.getMethodsWithAnnotation(Class.forName(game.getClass()
-                .getName()), Settable.class)) {
-            if (m.getName().equals("setPlayer")) {
-                m.invoke(game, player);
-            }
-        }
-    }
-
-    /**
      * Creates a new level using reflection and sets all of the necessary dependencies
+     * 
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
      */
-    private void createNewLevel () {
-        isFreeWorld.set(false);
-        levelView = new LevelView(setSpawnPoints(), setWalkable(), isFreeWorld);
-        Pane levelViewPane = levelView.getBorder(scene);
-        gameWorldFactory.bindGridSize(levelView.getGridDimensionProperty());
-        nextWorld = gameWorldFactory.createGameWorld();
-        if (nextWorld instanceof FreeWorld) {
-            freeworld = (FreeWorld) nextWorld;
-            LibraryData.getInstance().addFreeWorldPath(freeworld.getPath());
-            isFreeWorld.set(true);
-        }
-
-        LevelPreferencesEditor prefs = new LevelPreferencesEditor();
-        WaveEditor waves = createLevelAndWaveObject(nextWorld, prefs);
-        InteractionTable iTable = new InteractionTable();
-
-        nextWorld.setCollisionEngine(iTable.getData().getCollisionEngine());
-        nextWorld.setRangeEngine(iTable.getData().getRangeEngine());
-        LevelTabSet newLevel = new LevelTabSet(levelViewPane, waves.getObject(), iTable.getTable(),
-                                               prefs.getObject());
+    private void createNewLevel () throws InstantiationException, IllegalAccessException,
+                                  ClassNotFoundException, IllegalArgumentException,
+                                  InvocationTargetException {
+        GameWorld newWorld = createWorld();
 
         Tab newTab = new Tab("Level:" + levelCount++);
-        newTab.setContent(newLevel.getBaseNode());
+        newTab.setContent(createLevelTabSet(newWorld).getBaseNode());
         newTab.setClosable(false);
+
         tabView.getTabs().add(newTab);
         ((HudEditorTab) hudTab).setBackgroundImage(new Image(levelView.getBackgroundImagePath()
                 .getValue()));
+    }
+
+    /**
+     * Creates a new LevelTabSet
+     * 
+     * @param newWorld
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     */
+    private LevelTabSet createLevelTabSet (GameWorld newWorld) throws InstantiationException,
+                                                              IllegalAccessException,
+                                                              ClassNotFoundException,
+                                                              InvocationTargetException {
+        LevelPreferencesEditor prefs = new LevelPreferencesEditor();
+        WaveEditor waves = createLevelAndWaveObjects(newWorld, prefs);
+        InteractionTable iTable = new InteractionTable();
+
+        ((AbstractWorld) newWorld).setCollisionEngine(iTable.getData().getCollisionEngine());
+        ((AbstractWorld) newWorld).setRangeEngine(iTable.getData().getRangeEngine());
+
+        LevelTabSet newLevel =
+                new LevelTabSet(levelView.getBorder(scene), waves.getObject(), iTable.getTable(),
+                                prefs.getObject());
+        return newLevel;
+    }
+
+    /**
+     * Uses the gameWorldFactory to create a new World and initialize it
+     * 
+     * @return
+     */
+    private GameWorld createWorld () {
+        isFreeWorld.set(false);
+        levelView = new LevelView(setSpawnPoints(), setWalkable(), isFreeWorld);
+        gameWorldFactory.bindGridSize(levelView.getGridDimensionProperty());
+        GameWorld returnWorld = gameWorldFactory.createGameWorld();
+        if (returnWorld instanceof FreeWorld) {
+            freeworld = (FreeWorld) returnWorld;
+            LibraryData.getInstance().addFreeWorldPath(freeworld.getPath());
+            isFreeWorld.set(true);
+        }
+        return nextWorld = returnWorld;
     }
 
     /**
@@ -212,70 +222,25 @@ public class CentralTabView implements UIObject {
      * @param nextWorld
      * @param prefs
      * @return
+     * @throws InvocationTargetException
+     * @throws IllegalArgumentException
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
      */
-    private WaveEditor createLevelAndWaveObject (GameWorld nextWorld, LevelPreferencesEditor prefs) {
-        Level levelData = null;
+    private WaveEditor createLevelAndWaveObjects (GameWorld nextWorld, LevelPreferencesEditor prefs)
+                                                                                                    throws InstantiationException,
+                                                                                                    IllegalAccessException,
+                                                                                                    ClassNotFoundException,
+                                                                                                    IllegalArgumentException,
+                                                                                                    InvocationTargetException {
         StoryBoard sb = new StoryBoard();
-        List<Method> levelMethods;
-
-        try {
-            levelData = (Level) Class
-                    .forName(EditingParser
-                            .getInterfaceClasses("engine.fieldsetting.implementing_classes")
-                            .get("Level").get(0)).newInstance();
-
-            levelMethods = EditingParser.getMethodsWithAnnotation(Class.forName(levelData
-                    .getClass().getName()), Settable.class);
-
-            for (Method m : levelMethods) {
-                checkAndInvokeMethods(nextWorld, levelData, sb, m);
-            }
-
-            if (!shopSet) {
-                for (Method m : EditingParser.getMethodsWithAnnotation(Class.forName(shopModel
-                        .getClass().getName()), Settable.class)) {
-                    if (m.getName().equals("setGameWorld")) {
-                        m.invoke(shopModel, nextWorld);
-                        shopSet = true;
-                    }
-                }
-            }
-        }
-        catch (InstantiationException |
-                IllegalAccessException |
-                InvocationTargetException |
-                ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Level levelData = levelFactory.makeLevel(nextWorld, shopSet, shopModel, sb);
 
         prefs.setLevel(levelData);
         levelView.setLevel(levelData);
-        game.getLevelBoard().addLevel(levelData);
+        gameManager.getGame().getLevelBoard().addLevel(levelData);
         return new WaveEditor(sb, levelData.getGameWorld());
-    }
-
-    /**
-     * Checks specific methods and invokes them if necessary
-     * 
-     * @param nextWorld
-     * @param levelData
-     * @param sb
-     * @param m
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     */
-    private void checkAndInvokeMethods (GameWorld nextWorld,
-                                        Level levelData,
-                                        StoryBoard sb,
-                                        Method m)
-                                                 throws IllegalAccessException,
-                                                 InvocationTargetException {
-        if (m.getName().equals("setStoryBoard")) {
-            m.invoke(levelData, sb);
-        }
-        if (m.getName().equals("setGameWorld")) {
-            m.invoke(levelData, nextWorld);
-        }
     }
 
     @Override
@@ -305,9 +270,9 @@ public class CentralTabView implements UIObject {
     }
 
     public BiConsumer<List<GridCell>, List<GridCell>> setWalkable () {
-        return (tower, enemy) -> { 
-            nextWorld.setObstacles(enemy);
-            nextWorld.setTowerObstacles(tower);
+        return (tower, enemy) -> {
+            ((AbstractWorld) nextWorld).setObstacles(enemy);
+            ((AbstractWorld) nextWorld).setTowerObstacles(tower);
         };
     }
 
