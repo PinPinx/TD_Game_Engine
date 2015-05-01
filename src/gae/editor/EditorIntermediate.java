@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// ERIC SABA
+
 package gae.editor;
 
 import gae.editorView.EditorIntermediateView;
@@ -20,11 +23,8 @@ public class EditorIntermediate {
         Map<String, ArrayList<String>> map =
                 EditingParser.getInterfaceClasses("engine.fieldsetting.implementing_classes");
         ArrayList<String> array = map.get(componentEditor.getInterfaceClass().getName());
-        if (array == null)
+        if (array == null || array.size() < 2)
             componentEditor.popNewEditor(i);
-        else if (array.size() < 2) {
-            componentEditor.popNewEditor(i);
-        }
         else
             new EditorIntermediateView(array, componentEditor, i);
     }
