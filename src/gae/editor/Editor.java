@@ -1,13 +1,14 @@
+// This entire file is part of my masterpiece.
+// ERIC SABA
+
 package gae.editor;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import engine.fieldsetting.Settable;
-import engine.gameobject.units.Buff;
 
 
 /**
@@ -19,6 +20,11 @@ import engine.gameobject.units.Buff;
 public abstract class Editor implements Edits {
     private Map<String, ArrayList<String>> myPropertiesMap;
     private final static String COLLECTIONS_TYPE = "java.util.Collection<engine.gameobject.units.Buff>";
+    private final static String DOUBLE_EDITOR = "DoubleTextEditor";
+    private final static String FILE_CHOOSER_EDITOR = "FileChooserEditor";
+    private final static String TEXT_EDITOR = "TextEditor";
+    private final static String COLLECTION_EDITOR = "CollectionComponentEditor";
+    private final static String OBJECT_EDITOR = "ObjectComponentEditor";
 
     public Editor () {
         myPropertiesMap =
@@ -41,30 +47,16 @@ public abstract class Editor implements Edits {
         TreeNode root = new TreeNode(m, "null");
         List<Method> methods = EditingParser.getMethodsWithAnnotation(klass, Settable.class);
         for (Method method : methods) {
-            // System.out.println(method.toString());
             Type parameterClass = method.getGenericParameterTypes()[0];
-            if (parameterClass.equals(double.class)) {
-                System.out.println("double  " + getPropertyName(method.getName()));
-                root.addToNodes(new TreeNode(method, "DoubleTextEditor"));
-            }
+            if (parameterClass.equals(double.class)) root.addToNodes(new TreeNode(method, DOUBLE_EDITOR));
             else if (parameterClass.equals(String.class)) {
-                if (getPropertyName(method.getName()).equals("Image Path")) {
-                    System.out.println("FileChooser  " + getPropertyName(method.getName()));
-                    root.addToNodes(new TreeNode(method, "FileChooserEditor"));
-                }
-                else {
-                    System.out.println("String  " + getPropertyName(method.getName()));
-                    root.addToNodes(new TreeNode(method, "TextEditor"));
-                }
+                if (getPropertyName(method.getName()).equals("Image Path")) root.addToNodes(new TreeNode(method, FILE_CHOOSER_EDITOR));
+                else root.addToNodes(new TreeNode(method, TEXT_EDITOR));
             }
             else if (parameterClass.getTypeName().equals(COLLECTIONS_TYPE)) {
-                root.addToNodes(new TreeNode(method, "CollectionComponentEditor"));
+                root.addToNodes(new TreeNode(method, COLLECTION_EDITOR));
             }
-            else {
-                System.out.println(parameterClass.getTypeName() + ":");
-                // root.addToNodes(getMethodsTree((Class<?>) parameterClass, method));
-                root.addToNodes(new TreeNode(method, "ObjectComponentEditor"));
-            }
+            else root.addToNodes(new TreeNode(method, OBJECT_EDITOR));
         }
         return root;
     }

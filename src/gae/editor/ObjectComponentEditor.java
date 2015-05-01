@@ -1,11 +1,12 @@
+// This entire file is part of my masterpiece.
+// ERIC SABA
+
 package gae.editor;
 
 import gae.editorView.PopUpEditorView;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -73,9 +74,7 @@ public class ObjectComponentEditor extends ComponentEditor {
     }
 
     public void popNewEditor (int index) {
-        // Consumer<Object> setObjectConsumer = o -> setObject(o);
         Consumer<Object> setObjectConsumer = o -> clear();
-        // GenericObjectsPane.newCustomObject(clazz, "yo", setObjectConsumer);
         new PopUpEditorView(setObjectConsumer, biConsumer, myObject.getClass(), index);
     }
 

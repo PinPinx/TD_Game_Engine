@@ -1,9 +1,11 @@
+// This entire file is part of my masterpiece.
+// ERIC SABA
+
 package gae.editor;
 
 import gae.openingView.UIObject;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,7 +114,6 @@ public class SimpleEditor extends Editor implements UIObject {
         String rootType = root.getInputType();
         if (rootType.equals(OBJECT_COMP_EDITOR)) {
             Class<?> klass = (Class<?>) root.getMethod().getGenericParameterTypes()[0];
-//            klass = EditingParser.getConcreteClassFromMap(klass);
             component = new ObjectComponentEditor(klass, biConsumer);
             objectFields.add((ObjectComponentEditor) component);
             finishMap(component, root);
@@ -129,7 +130,7 @@ public class SimpleEditor extends Editor implements UIObject {
             editors.add(component.getObject());
             finishMap(component, root);
         }
-//        editors.add(component.getObject());
+        editors.add(component.getObject());
     }
 
     private void finishMap (ComponentEditor component, TreeNode root) {

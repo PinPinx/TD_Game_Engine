@@ -11,8 +11,6 @@ import gae.editor.EditingParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -20,14 +18,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class PlayerBuilder implements Builder {
 
     private static final String SET_WALLET_METHOD = "setWalletUnit";
     private VBox builder;
     private Button createButton;
-    private EditingParser parser;
     private List<Method> settables;
     private List<FieldMaker> fields;
     private List<String> sublabels;
@@ -37,12 +33,10 @@ public class PlayerBuilder implements Builder {
     private HBox walletBox;
     private ComboBox<String> walletDropDown;
 
-    @SuppressWarnings("static-access")
     public PlayerBuilder () {
         builder = new VBox(15);
         createButton = new Button("CREATE");
-        parser = new EditingParser();
-        settables = parser.getMethodsWithAnnotation(Player.class, Settable.class);
+        settables = EditingParser.getMethodsWithAnnotation(Player.class, Settable.class);
         fields = new ArrayList<>();
         sublabels = new ArrayList<>();
         allInputs = new ArrayList<>();
@@ -80,7 +74,6 @@ public class PlayerBuilder implements Builder {
      * Creates field with all setters needed. Uses recursion to check if parameters of the method
      * need to be built as well.
      */
-    @SuppressWarnings("static-access")
     private void populateFields (List<Method> methods) {
         methods.forEach(e -> {
             Arrays.asList(e.getParameterTypes())
@@ -98,7 +91,7 @@ public class PlayerBuilder implements Builder {
                                  else {
                                      addSubLabel(e);
                                      try {
-                                         populateFields(parser.getMethodsWithAnnotation(Class
+                                         populateFields(EditingParser.getMethodsWithAnnotation(Class
                                                  .forName(f.getName()), Settable.class));
                                      }
                                      catch (Exception e1) {

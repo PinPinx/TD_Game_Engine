@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// ERIC SABA
+
 package gae.editor;
 
 import java.lang.reflect.Method;
@@ -21,6 +24,20 @@ import engine.fieldsetting.Triggerable;
 public class EditingParser {
     private static final String DEFAULT_PROPERTY_FILE = "engine.fieldsetting.implementing_classes";
     private static final String USER_FRIENDLY_FILE = "engine.fieldsetting.user_friendly_names";
+    
+    private static EditingParser instance;
+    private Map<String, ArrayList<String>> defaultPropertiesMap;
+    private Map<String, String> userFriendlyMap;
+    
+    private EditingParser() {
+        defaultPropertiesMap = getInterfaceClassesFromPropertyFile(DEFAULT_PROPERTY_FILE);
+        userFriendlyMap = createUserFriendlyMap();
+    }
+    
+    private static  EditingParser getInstance() {
+        if (instance == null) return new EditingParser();
+        else return instance;
+    }
 
     /**
      * Gets the methods with the annotation type from a specific class.
@@ -59,6 +76,11 @@ public class EditingParser {
      * @return the map of the key to its values
      */
     public static Map<String, ArrayList<String>> getInterfaceClasses (String propertyFilePath) {
+        if (propertyFilePath.equals(DEFAULT_PROPERTY_FILE)) return getInstance().getDefaultPropertiesMap();
+        else return getInterfaceClassesFromPropertyFile(propertyFilePath);
+    }
+    
+    private static Map<String, ArrayList<String>> getInterfaceClassesFromPropertyFile (String propertyFilePath) {
         Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
         ResourceBundle rb = ResourceBundle.getBundle(propertyFilePath);
         Enumeration<String> enumerator = rb.getKeys();
@@ -87,6 +109,14 @@ public class EditingParser {
      * @return          the user friendly name
      */
     public static String getUserFriendlyName (String originalName) {
+        String ret = getInstance().getUserFriendlyMap().get(originalName);
+        if (ret != null)
+            return ret;
+        else
+            return originalName;
+    }
+    
+    private Map<String, String> createUserFriendlyMap() {
         Map<String, String> map = new HashMap<String, String>();
         ResourceBundle rb = ResourceBundle.getBundle(USER_FRIENDLY_FILE);
         Enumeration<String> enumerator = rb.getKeys();
@@ -95,12 +125,7 @@ public class EditingParser {
             String key = enumerator.nextElement();
             map.put(key, rb.getString(key));
         }
-
-        String ret = map.get(originalName);
-        if (ret != null)
-            return ret;
-        else
-            return originalName;
+        return map;
     }
 
     /**
@@ -110,7 +135,7 @@ public class EditingParser {
      * @return The name of the interface that the given class implements.
      */
     public static String getInterfaceClassFromMap (Class<?> klass) {
-        Map<String, ArrayList<String>> map = getInterfaceClasses(DEFAULT_PROPERTY_FILE);
+        Map<String, ArrayList<String>> map = getInstance().getDefaultPropertiesMap();
         for (Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
             ArrayList<String> list = entry.getValue();
             for (String concrete : list) {
@@ -129,7 +154,7 @@ public class EditingParser {
      * @return the conrete class from the map or if the input klass is not in the map, the input
      */
     public static Class<?> getConcreteClassFromMap (Class<?> klass) {
-        Map<String, ArrayList<String>> map = getInterfaceClasses(DEFAULT_PROPERTY_FILE);
+        Map<String, ArrayList<String>> map = getInstance().getDefaultPropertiesMap();
         if (map.containsKey(klass.getName())) {
             try {
                 String newName = map.get(klass.getName()).get(0);
@@ -166,6 +191,14 @@ public class EditingParser {
         }
 
         return component;
+    }
+
+    private Map<String, ArrayList<String>> getDefaultPropertiesMap() {
+        return defaultPropertiesMap;
+    }
+    
+    private Map<String, String> getUserFriendlyMap() {
+        return userFriendlyMap;
     }
 
 }
