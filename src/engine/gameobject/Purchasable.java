@@ -1,6 +1,7 @@
+// This entire file is part of my masterpiece.
+// Thomas Puglisi
+
 package engine.gameobject;
-
-
 
 public interface Purchasable<E> {
     /**

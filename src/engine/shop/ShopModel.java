@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Thomas Puglisi
+
 package engine.shop;
 
 import java.util.List;
@@ -9,21 +12,9 @@ import engine.gameobject.GameObject;
 import engine.gameobject.PointSimple;
 import engine.gameobject.Purchasable;
 import engine.shop.ShopModelSimple.ItemInfo;
-import engine.shop.ShopModelSimple.UpgradeGraphic;
-import gameworld.GameWorld;
 
 
 public interface ShopModel {
-    
-    
-    public void setGameWorld (GameWorld world);
-    
-    /**
-     * Adds an item to the shop's inventory
-     *
-     * @param prototype
-     */
-    public void addPurchasable (Purchasable<GameObject> prototype);
 
     /**
      *
@@ -47,7 +38,7 @@ public interface ShopModel {
      * @return whether GameObject was purchased or not
      */
     public boolean purchaseGameObject (String name, PointSimple location, EventHandler selected);
-    
+
     public void purchaseUpgrade (String name, Consumer<GameObject> refreshUpgrades);
 
     /**
@@ -82,10 +73,22 @@ public interface ShopModel {
 
     /**
      * Sells GameObject by removing it from GameWorld and depositing value into Player's account
+     * 
      * @param obj
      */
     public void sellGameObject (GameObject obj);
 
-    
+    /**
+     * 
+     * @param node
+     * @return the GameObject that contains the given node
+     */
     public GameObject getObjectFromNode (Node node);
+
+    /**
+     * Changes the model's current world. Called when changing levels
+     * 
+     * @param currentWorld
+     */
+    public void setShopWorld (ShopWorld currentWorld);
 }

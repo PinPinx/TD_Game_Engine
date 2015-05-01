@@ -98,11 +98,6 @@ public class ShopEditor implements UIObject {
             checklist.getSelectedPlaceables().stream().forEach(event -> {
                 prototypes.add((Purchasable<GameObject>) event.getGameObject());
             });
-            prototypes.forEach(x->System.out.println(x.getName()));
-            System.out.println("hey");
-            for(String key: ((ShopModelSimple) shop).getMap().keySet()){
-                System.out.println(key);
-        }
         });
         
         return button;

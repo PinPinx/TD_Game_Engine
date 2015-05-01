@@ -84,7 +84,7 @@ public class ConcreteLevelBoard extends Observable implements LevelBoard {
     public void startNextLevel () {
         // TODO Auto-generated method stub
         curLevelIndex++;
-        shop.setGameWorld(getGameWorld());
+        shop.setShopWorld(getGameWorld());
     }
 
     @Override

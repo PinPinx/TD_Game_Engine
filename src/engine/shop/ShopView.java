@@ -3,7 +3,6 @@ package engine.shop;
 import engine.gameobject.GameObject;
 import engine.gameobject.PointSimple;
 import engine.shop.ShopModelSimple.ItemInfo;
-import engine.shop.ShopModelSimple.UpgradeGraphic;
 import gameworld.GameWorld;
 import java.util.EnumMap;
 import java.util.List;

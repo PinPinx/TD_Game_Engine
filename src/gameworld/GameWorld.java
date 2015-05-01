@@ -4,9 +4,10 @@ import javafx.scene.Node;
 import engine.gameobject.GameObject;
 import engine.gameobject.PointSimple;
 import engine.pathfinding.Path;
+import engine.shop.ShopWorld;
 
 
-public interface GameWorld extends ObjectCollection {
+public interface GameWorld extends ObjectCollection, ShopWorld{
     public void updateGameObjects ();
 
     public void addObject (GameObject toSpawn, PointSimple pixelCoords)

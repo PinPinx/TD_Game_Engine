@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Thomas Puglisi
+
 package engine.shop;
 
 import java.util.ArrayList;
@@ -14,23 +17,22 @@ import engine.gameobject.GameObject;
 import engine.gameobject.PointSimple;
 import engine.gameobject.Purchasable;
 import engine.gameobject.weapon.upgradetree.upgradebundle.UpgradeBundle;
-import gameworld.GameWorld;
 import gameworld.StructurePlacementException;
 
 
 /**
- * Manages the maps containing the purchasable prototypes. Assumes all given Prototypes contain a
- * PriceTag, and are therefore available for purchase.
+ * Manages the maps containing the purchasable prototypes.
  *
  * @author Tom Puglisi
  *
  */
 public class ShopModelSimple implements ShopModel {
     private Player currentPlayer;
-    private GameWorld myGameWorld;
-    private Map<String, Purchasable<GameObject>> purchasableMap = new HashMap<>();
-    private Map<String, UpgradeBundle> upgradeMap = new HashMap<>();
+    private ShopWorld currentWorld;
     private double markup;
+    private Map<String, Purchasable<GameObject>> purchasableMap;
+    private Map<String, UpgradeBundle> upgradeMap;
+
     private GameObject currentGameObject;
 
     public ShopModelSimple () {
@@ -38,22 +40,18 @@ public class ShopModelSimple implements ShopModel {
         currentPlayer = new Player();
     }
 
-    public ShopModelSimple (GameWorld world, Player player, double markup) {
+    public ShopModelSimple (ShopWorld currentWorld, Player currentPlayer, double markup) {
         this.markup = markup;
-        myGameWorld = world;
-        currentPlayer = player;
+        this.currentWorld = currentWorld;
+        this.currentPlayer = currentPlayer;
         purchasableMap = new HashMap<>();
         upgradeMap = new HashMap<>();
     }
 
     public ShopModelSimple (List<Purchasable<GameObject>> purchasables,
-                            GameWorld currentGameWorld,
-                            Player currentPlayer, double markup) {
-        this.markup = markup;
-        this.currentPlayer = currentPlayer;
-        purchasableMap = new HashMap<String, Purchasable<GameObject>>();
-        upgradeMap = new HashMap<String, UpgradeBundle>();
-        purchasables.forEach(purchasable -> addPurchasable(purchasable));
+                            ShopWorld currentWorld, Player currentPlayer, double markup) {
+        this(currentWorld, currentPlayer, markup);
+        setPurchasables(purchasables);
     }
 
     @Settable
@@ -62,8 +60,9 @@ public class ShopModelSimple implements ShopModel {
     }
 
     @Settable
-    public void setGameWorld (GameWorld world) {
-        myGameWorld = world;
+    @Override
+    public void setShopWorld (ShopWorld world) {
+        currentWorld = world;
     }
 
     @Settable
@@ -71,25 +70,21 @@ public class ShopModelSimple implements ShopModel {
         currentPlayer = player;
     }
 
-    @Override
-    public void addPurchasable (Purchasable<GameObject> purchasable) {
+    private void addPurchasable (Purchasable<GameObject> purchasable) {
         purchasableMap.put(purchasable.getName(), purchasable);
     }
-    
+
     @Settable
     public void setPurchasables (List<Purchasable<GameObject>> purchasables) {
         purchasableMap.clear();
-        purchasables.forEach(prototype -> addPurchasable(prototype));
-    }
-    
-    public Map<String, Purchasable<GameObject>> getMap(){
-        return purchasableMap;
+        purchasables.forEach(purchasable -> addPurchasable(purchasable));
     }
 
     @Override
     public List<ItemGraphic> getItemGraphics () {
         List<ItemGraphic> items = new ArrayList<ItemGraphic>();
-        purchasableMap.values().forEach(purchasable -> items.add(new ItemGraphic(purchasable.getName(), purchasable.getShopGraphic())));
+        purchasableMap.values().forEach(purchasable -> items.add(new ItemGraphic(purchasable
+                .getName(), purchasable.getShopGraphic())));
         return items;
     }
 
@@ -104,13 +99,14 @@ public class ShopModelSimple implements ShopModel {
             upgradeMap.put(name, bundle);
             ItemGraphic graphic = new ItemGraphic(name, bundle.getShopGraphic());
             graphic.unGlow();
-            upgradeGraphics.add(new UpgradeGraphic(graphic, canPurchase(name), bundle.isFinalUpgrade()));
+            upgradeGraphics.add(new UpgradeGraphic(graphic, canPurchase(name), bundle
+                    .isFinalUpgrade()));
         });
         return upgradeGraphics;
     }
 
     /**
-     * Purchases and item and places it at the selected position on the screen
+     * Purchases an item and places it at the selected position on the screen
      *
      * @param name Name of GameObject
      * @param location Location to be placed
@@ -118,10 +114,10 @@ public class ShopModelSimple implements ShopModel {
     public boolean purchaseGameObject (String name, PointSimple location, EventHandler selected) {
         if (canPurchase(name) && checkPlacement(name, location)) {
             try {
-                GameObject tower = purchasableMap.get(name).clone(); 
-                //GameObject tower = new TestTower(1, 100, 100);
+                GameObject tower = purchasableMap.get(name).clone();
+                // GameObject tower = new TestTower(1, 100, 100);
                 tower.getGraphic().getNode().setOnMousePressed(selected);
-                myGameWorld.addObject(tower, location);
+                currentWorld.addObject(tower, location);
                 currentPlayer.getWallet().withdraw(getPrice(name));
                 return true;
             }
@@ -131,11 +127,11 @@ public class ShopModelSimple implements ShopModel {
         }
         return false;
     }
-    
+
     @Override
     public void sellGameObject (GameObject obj) {
         currentPlayer.getWallet().deposit(obj.getValue());
-        //myGameWorld.
+        currentWorld.removeObject(obj);
     }
 
     /**
@@ -158,7 +154,12 @@ public class ShopModelSimple implements ShopModel {
         return currentPlayer.getWallet().getBalance() >= getPrice(name);
     }
 
-    public double getPrice (String name) {
+    /**
+     * 
+     * @param name
+     * @return the marked up price from the purchasable's intrinsic value
+     */
+    private double getPrice (String name) {
         return getPurchasable(name).getValue() * markup;
     }
 
@@ -176,7 +177,12 @@ public class ShopModelSimple implements ShopModel {
         return info;
     }
 
-    // TODO: account for the possibility of a "name" not in either map
+    /**
+     * Assumes that the given object exists either in the purchasableMap or the upgradeMap
+     * 
+     * @param name
+     * @return the purchasable associated with the String name
+     */
     private Purchasable<?> getPurchasable (String name) {
         if (purchasableMap.containsKey(name)) {
             return (Purchasable<?>) purchasableMap.get(name);
@@ -186,44 +192,24 @@ public class ShopModelSimple implements ShopModel {
         }
     }
 
+    /**
+     * 
+     * Enum used by the view to determine what information to display
+     *
+     */
     public enum ItemInfo {
         NAME, DESCRIPTION, PRICE
     }
 
     @Override
     public boolean checkPlacement (String name, PointSimple location) {
-        return myGameWorld.isPlaceable(((GameObject) purchasableMap.get(name)).getGraphic().getNode(),
-                                       location);
+        return currentWorld.isPlaceable(((GameObject) purchasableMap.get(name)).getGraphic()
+                .getNode(), location);
     }
-    
-    public GameObject getObjectFromNode (Node node) {
-        return myGameWorld.getObjectFromNode(node);
-    }
-    
-    
-    public class UpgradeGraphic{
-        
-        private ItemGraphic graphic;
-        private boolean canAfford;
-        private boolean isFinal;
 
-        private UpgradeGraphic (ItemGraphic graphic, boolean canAfford, boolean isFinal){
-            this.graphic = graphic;
-            this.canAfford = canAfford;
-            this.isFinal = isFinal;
-        }
-        
-        public ItemGraphic getGraphic(){
-            return graphic;
-        }
-        
-        public boolean canAfford(){
-            return canAfford;
-        }
-        
-        public boolean isFinal(){
-            return isFinal;
-        }
+    @Override
+    public GameObject getObjectFromNode (Node node) {
+        return currentWorld.getObjectFromNode(node);
     }
 
 }
