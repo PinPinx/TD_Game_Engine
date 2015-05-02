@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Nathan Prabhu
+
 package engine.gameobject.weapon.upgradetree;
 
 import java.util.List;

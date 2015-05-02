@@ -1,13 +1,14 @@
+// This entire file is part of my masterpiece.
+// Nathan Prabhu
+
 package engine.gameobject.weapon.upgradetree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import engine.fieldsetting.Settable;
-import engine.gameobject.weapon.BasicWeapon;
 import engine.gameobject.weapon.upgradetree.upgradebundle.BuildableBundle;
 import engine.gameobject.weapon.upgradetree.upgradebundle.UpgradeBundle;
-import engine.gameobject.weapon.upgradetree.upgradebundle.UpgradeBundleSimple;
 
 
 /**
@@ -37,13 +38,11 @@ public class UpgradeTreeSimple implements UpgradeTree {
     private void buildTree (List<? extends BuildableBundle> nodes) {
         first = current = nodes.get(0);
         BuildableBundle last = first;
-        // take care of first node's parent
-        last.setParent(this);
-
+        // set parents of all nodes
+        nodes.forEach(node -> node.setParent(this));
+        
         // iterate from second node onward
         for (BuildableBundle node : nodes.subList(1, nodes.size())) {
-            node.setParent(this);
-
             last.addChild(node);
             last = node;
         }

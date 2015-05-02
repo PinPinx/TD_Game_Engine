@@ -229,7 +229,7 @@ public class BasicWeapon implements Weapon{
     @Override
     public void applyUpgrades (UpgradeBundle bundle) {
         bundle.applyUpgrades(upgradables);
-        bundle.getParent().updateCurrent(bundle.getParent());
+        tree.updateCurrent(bundle.getParent());
     }
 
 }
