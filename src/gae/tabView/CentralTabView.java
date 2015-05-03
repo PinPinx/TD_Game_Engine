@@ -7,11 +7,11 @@ import engine.game.Player;
 import engine.game.StoryBoard;
 import engine.shop.ShopModel;
 import gae.editor.EditingParser;
-import gae.gameView.InteractionTable;
 import gae.gameWorld.FixedGameWorldFactory;
 import gae.gameWorld.FreeGameWorldFactory;
 import gae.gameWorld.GameWorldFactory;
 import gae.gridView.LevelView;
+import gae.interactionTable.InteractionTableSimple;
 import gae.levelPreferences.LevelPreferencesEditor;
 import gae.listView.LibraryData;
 import gae.openingView.UIObject;
@@ -19,11 +19,13 @@ import gae.waveeditor.WaveEditor;
 import gameworld.AbstractWorld;
 import gameworld.FreeWorld;
 import gameworld.GameWorld;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
@@ -191,11 +193,11 @@ public class CentralTabView implements UIObject {
 
         LevelPreferencesEditor prefs = new LevelPreferencesEditor();
         WaveEditor waves = createLevelAndWaveObject(nextWorld, prefs);
-        InteractionTable iTable = new InteractionTable();
+        InteractionTableSimple iTable = new InteractionTableSimple();
 
-        nextWorld.setCollisionEngine(iTable.getData().getCollisionEngine());
-        nextWorld.setRangeEngine(iTable.getData().getRangeEngine());
-        LevelTabSet newLevel = new LevelTabSet(levelViewPane, waves.getObject(), iTable.getTable(),
+        nextWorld.setCollisionEngine(iTable.getInteractionData().getCollisionEngine());
+        nextWorld.setRangeEngine(iTable.getInteractionData().getRangeEngine());
+        LevelTabSet newLevel = new LevelTabSet(levelViewPane, waves.getObject(), iTable.getInteractionTable(),
                                                prefs.getObject());
 
         Tab newTab = new Tab("Level:" + levelCount++);
