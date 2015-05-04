@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Sierra Smith
+
 package engine.goals;
 
 import engine.game.Player;
@@ -7,7 +10,7 @@ import java.util.Observable;
 /**
  * This class represents the head of the hierarchy of goals that listen to the player.
  * 
- * @author sierrasmith95
+ * @author Sierra Smith
  *
  */
 public abstract class PlayerGoal extends Goal {

@@ -1,7 +1,9 @@
+// This entire file is part of my masterpiece.
+// Sierra Smith
+
 package engine.goals;
 
 import engine.game.Player;
-import java.util.Observable;
 
 
 /**
@@ -11,11 +13,11 @@ import java.util.Observable;
  * @author Sierra Smith
  *
  */
-public class ScoreGoal extends PlayerGoal {
+public class MinScoreGoal extends PlayerGoal {
 
     private int myScoreGoal;
 
-    public ScoreGoal (Player player, int score) {
+    public MinScoreGoal (Player player, int score) {
         super(player);
         myScoreGoal = score;
     }
@@ -23,7 +25,6 @@ public class ScoreGoal extends PlayerGoal {
     @Override
     protected void checkCondition (Player p) {
        setIsSatisfied(p.getScore() >= myScoreGoal);
-       System.out.println(p.getScore());
     }
 
 }
