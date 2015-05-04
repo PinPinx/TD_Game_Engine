@@ -8,4 +8,6 @@ public interface Authorable {
     public int getID ();
     
     public String getImagePath();
+    
+    public Authorable makeNewInstance();
 }

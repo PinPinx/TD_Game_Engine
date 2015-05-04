@@ -44,7 +44,6 @@ public class TileContainer extends Region implements ContainerWrapper {
         
         selectionColor = color;
         double maxHeight = gridHeightProperty.get();
-        System.out.println("PLEASE:" + gridHeightProperty.get());
         addTiles(sizeProp.get(), maxHeight);
         sizeProp.addListener( (observable, oldVal, newVal) -> {
             removeTiles();
@@ -85,9 +84,7 @@ public class TileContainer extends Region implements ContainerWrapper {
             }
 
         }
-        
-        System.out.println(gridWidthProperty.get());
-        System.out.println(gridHeightProperty.get());
+       
     }
 
     /**
@@ -96,8 +93,6 @@ public class TileContainer extends Region implements ContainerWrapper {
     @Override
     public boolean checkBounds (double x, double y) {
         Point2D point = this.screenToLocal(x, y);
-        System.out.println("X IS : " + point.getX());
-        System.out.println("Y IS : " + y);
         if (point.getX() < 0 || point.getX() > getWidth() || y < 0 ||
             y > getHeight()) {
             return true;

@@ -150,4 +150,10 @@ public class PathView implements Authorable {
        // change this to actual title later
         return "Path";
     }
+
+    @Override
+    public Authorable makeNewInstance () {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

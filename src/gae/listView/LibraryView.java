@@ -2,11 +2,13 @@ package gae.listView;
 
 import gae.backend.Placeable;
 import gae.gridView.ContainerWrapper;
+import gae.gridView.PathView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import voogasalad.util.pathsearch.graph.GridCell;
 import javafx.beans.property.BooleanProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
@@ -31,6 +33,7 @@ public class LibraryView {
     private Group objectGroup;
     private Node nodeScene;
     private ObservableList<Authorable> editableObservableList;
+    private ObservableList<PathView> pathObservableList;
     private List<String> instantiatedTypes;
     private Scene myScene;
     private Accordion accordion;
@@ -40,12 +43,6 @@ public class LibraryView {
 
     public LibraryView () {
         instantiatedTypes = new ArrayList<>();
-    }
-
-    public Scene getScene () {
-        root = new Group();
-        root.getChildren().add(view());
-        return new Scene(root);
     }
 
     /**
@@ -72,6 +69,35 @@ public class LibraryView {
         return root;
     }
 
+    /**
+     * 
+     * @return
+     */
+    private Node view () {
+        listOfListObjects = new ArrayList<>();
+        accordion = new Accordion();
+        editableObservableList = FXCollections.observableArrayList();
+        editableObservableList
+                .addListener( (ListChangeListener.Change<? extends Authorable> change) -> {
+                    while (change.next()) {
+                        if (change.wasAdded()) {
+                            setUpTitledPane((Authorable) change.getAddedSubList().get(0));
+                            setUpToggle();
+                        }
+                    }
+                });
+        pathList = new PathList((StackPane) nodeScene, myScene, wrapper);
+        pathTitledPane = pathList.getTitledPane("Path");
+        pathTitledPane.setOnMousePressed(event -> {
+            for (PaneList list : listOfListObjects) {
+                list.removeRoot();
+            }
+            pathList.setScreen();
+        });
+        accordion.getPanes().add(pathTitledPane);
+        return accordion;
+    }
+
     private void setUpTitledPane (Authorable authorable) {
         String type = authorable.getType();
         if (!instantiatedTypes.contains(type)) {
@@ -92,44 +118,6 @@ public class LibraryView {
             });
             accordion.getPanes().add(pane);
         }
-    }
-
-    /**
-     * Uses reflection to instantiate each GameObject's Pane subclass. Currently using a try/catch
-     * block as Path isn't part of the Generic GameObjects that we're using. Trying to figure out
-     * more common traits to be able to combine them.
-     *
-     * @return
-     */
-    private Node view () {
-        listOfListObjects = new ArrayList<>();
-        accordion = new Accordion();
-        editableObservableList = LibraryData.getInstance().getEditableObservableList();
-        for (Authorable authorable : editableObservableList) {
-            Placeable existing = (Placeable) authorable;
-            setUpTitledPane(existing);
-        }
-        editableObservableList
-                .addListener( (ListChangeListener.Change<? extends Authorable> change) -> {
-                    while (change.next()) {
-                        if (change.wasAdded()) { // if an editablenode was added
-                    Placeable added = (Placeable) change.getAddedSubList().get(0);
-                    setUpTitledPane(added);
-                    setUpToggle();
-                }
-            }
-        });
-        pathList = new PathList((StackPane) nodeScene, myScene, wrapper);
-        pathTitledPane = pathList.getTitledPane("Path");
-        pathTitledPane.setOnMousePressed(event -> {
-            for (PaneList list : listOfListObjects) {
-                list.removeRoot();
-            }
-            pathList.setScreen();
-        });
-        accordion.getPanes().add(pathTitledPane);
-        // setUpToggle();
-        return accordion;
     }
 
     /**
