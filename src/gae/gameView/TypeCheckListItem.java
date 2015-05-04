@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// NINA SUN
+
 package gae.gameView;
 
 import engine.gameobject.labels.Type;
@@ -9,15 +12,15 @@ import javafx.scene.text.Text;
 
 
 /**
- * CheckListItem that is created with a game engine label to be added to a LabelCheckList
+ * CheckListItem that is created with a game engine label to be added to a TypeCheckList
  *
  * @author Nina Sun
  */
-public class LabelCheckListItem implements CheckListItem {
+public class TypeCheckListItem implements CheckListItem {
     private Type label;
     private CheckBox checkbox;
 
-    public LabelCheckListItem (Type obj) {
+    public TypeCheckListItem (Type obj) {
         label = obj;
         checkbox = new CheckBox();
     }
@@ -29,10 +32,10 @@ public class LabelCheckListItem implements CheckListItem {
      */
     @Override
     public Node getNode () {
-        HBox node = new HBox(10);
+        HBox root = new HBox();
         Text text = new Text(label.getName());
-        node.getChildren().addAll(text, checkbox);
-        return node;
+        root.getChildren().addAll(text, checkbox);
+        return root;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class LabelCheckListItem implements CheckListItem {
     /**
      * Returns the label that the item holds
      * 
-     * @return label
+     * @return type
      */
     public Type getLabel () {
         return label;

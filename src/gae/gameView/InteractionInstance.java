@@ -169,7 +169,7 @@ public class InteractionInstance {
         private Button adder;
         private HBox addBox;
         private List<Type> labelList;
-        private LabelCheckList myChecker;
+        private TypeCheckList myChecker;
 
         public ObjectContainer () {
             container = new VBox();
@@ -178,7 +178,7 @@ public class InteractionInstance {
             adder = new Button();
             addBox = new HBox(15);
             Text addText = new Text("Add Labels");
-            myChecker = new LabelCheckList(myLibraryData.getLabelSet());
+            myChecker = new TypeCheckList(myLibraryData.getLabelSet());
 
             container.setId("interactionBox");
 
@@ -190,7 +190,7 @@ public class InteractionInstance {
             createObjectContainer();
         }
 
-        public LabelCheckList getCheckList () {
+        public TypeCheckList getCheckList () {
             return myChecker;
         }
 

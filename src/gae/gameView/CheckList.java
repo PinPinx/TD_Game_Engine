@@ -1,12 +1,15 @@
+// This entire file is part of my masterpiece.
+// NINA SUN
+
 package gae.gameView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 
@@ -20,13 +23,13 @@ import javafx.scene.layout.VBox;
 
 public abstract class CheckList {
 
-    private VBox container;
+    private Pane container;
     private ScrollPane scroller;
     private VBox checkList;
     private Map<CheckListItem, Boolean> myMap;
 
     public CheckList () {
-        container = new VBox();
+        container = new Pane();
         scroller = new ScrollPane();
         scroller.setPrefSize(250, 200);
         checkList = new VBox(15);
@@ -40,7 +43,7 @@ public abstract class CheckList {
      * 
      * @return checklist
      */
-    public Node getCheckList () {
+    public Pane getCheckList () {
         return container;
     }
 
@@ -55,9 +58,6 @@ public abstract class CheckList {
         item.getSelectedProperty().addListener( (obs, old, newVal) -> {
             myMap.put(item, newVal);
         });
-        /*
-         * TODO duplicate check? why isn't this working... vvv?
-         */
         if (!checkList.getChildren().contains(item.getNode()))
             checkList.getChildren().add(item.getNode());
     }

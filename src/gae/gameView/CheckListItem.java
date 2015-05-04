@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// NINA SUN
+
 package gae.gameView;
 
 import javafx.beans.property.BooleanProperty;

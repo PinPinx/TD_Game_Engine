@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// NINA SUN
+
 package gae.gameView;
 
 import java.util.ArrayList;
@@ -18,34 +21,26 @@ import engine.gameobject.labels.Type;
 
 
 /**
- * Checklist for types, previously called labels
+ * Checklist for types, shown in separate window
  * 
  * @author Nina Sun
  */
-public class LabelCheckList extends CheckList {
+public class TypeCheckList extends CheckList {
 
     private ObservableSet<Type> myObjects;
     private Stage myStage;
     private Scene myScene;
 
-    public LabelCheckList (ObservableSet<Type> objects) {
+    public TypeCheckList (ObservableSet<Type> objects) {
         super();
         myObjects = objects;
         myStage = new Stage();
         myScene = new Scene((Parent) getCheckList());
-        
+        //populate list
         myObjects.forEach(e -> {
-            createCheckOption(new LabelCheckListItem(e));
-        });
-        
-        myObjects.addListener((SetChangeListener.Change<? extends Type> change)->{
-            createCheckOption(new LabelCheckListItem(change.getElementAdded()));
-            for (CheckListItem key : getMap().keySet()) {
-              if (((LabelCheckListItem) key).getLabel().equals(change.getElementRemoved())) {
-                  ((Pane) getCheckList()).getChildren().remove(key.getNode());
-              }
-          }
-        });
+            createCheckOption(new TypeCheckListItem(e));
+        });     
+        addSetListener();
     }
 
     /**
@@ -60,13 +55,27 @@ public class LabelCheckList extends CheckList {
     /**
      * Returns the list of labels that has been selected in the checklist
      *
-     * @return list of labels
+     * @return list of types
      */
     public List<Type> getSelectedLabels () {
         List<Type> list = new ArrayList<>();
-        getSelectedItems().stream().forEach(e -> list.add(((LabelCheckListItem) e).getLabel()));
+        getSelectedItems().forEach(e -> list.add(((TypeCheckListItem) e).getLabel()));
         return list;
-
+    }
+    
+    /**
+     * Updates checklist when new types are added
+     *
+     */
+    private void addSetListener(){
+        myObjects.addListener((SetChangeListener.Change<? extends Type> change)->{
+            createCheckOption(new TypeCheckListItem(change.getElementAdded()));
+            for (CheckListItem key : getMap().keySet()) {
+              if (((TypeCheckListItem) key).getLabel().equals(change.getElementRemoved())) {
+                  getCheckList().getChildren().remove(key.getNode());
+              }
+          }
+        });
     }
 
 }

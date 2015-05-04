@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// NINA SUN
+
 package gae.gameView;
 
 import gae.backend.Placeable;
@@ -22,24 +25,11 @@ public class ShopCheckList extends CheckList {
     public ShopCheckList (ObservableList<Authorable> objects) {
         super();
         myObjects = (ObservableList<Placeable>) (ObservableList<?>) objects;
+        //populate checklist
         myObjects.forEach(e -> {
             createCheckOption(new ShopCheckListItem(e));
         });
-        myObjects.addListener( (ListChangeListener.Change<? extends Placeable> change) -> {
-            while (change.next()) {
-                change.getAddedSubList()
-                        .forEach(e -> {
-                            createCheckOption(new ShopCheckListItem(e));
-                        });
-                change.getRemoved().forEach(e -> {
-                    for (CheckListItem key : getMap().keySet()) {
-                        if (((ShopCheckListItem) key).getPlaceable().equals(e)) {
-                            ((Pane) getCheckList()).getChildren().remove(key.getNode());
-                        }
-                    }
-                });
-            }
-        });
+        addListListener();
     }
 
     /**
@@ -53,4 +43,23 @@ public class ShopCheckList extends CheckList {
         return list;
     }
 
+    /**
+     * Updates checklist when list changed
+     * 
+     */
+    private void addListListener(){
+        myObjects.addListener( (ListChangeListener.Change<? extends Placeable> change) -> {
+            while (change.next()) {
+                change.getAddedSubList()
+                        .forEach(e -> createCheckOption(new ShopCheckListItem(e)));
+                change.getRemoved().forEach(e -> {
+                    for (CheckListItem key : getMap().keySet()) {
+                        if (((ShopCheckListItem) key).getPlaceable().equals(e)) {
+                            getCheckList().getChildren().remove(key.getNode());
+                        }
+                    }
+                });
+            }
+        });
+    }
 }

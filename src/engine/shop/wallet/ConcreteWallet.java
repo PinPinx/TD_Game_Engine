@@ -29,6 +29,7 @@ public class ConcreteWallet extends Wallet {
     @Override
     public void withdraw (double amount) {
         myUnit.changeValue(amount * (-1));
+        System.out.println(myUnit.getLabel());
     }
     
     @Settable

@@ -33,6 +33,7 @@ public class PlayerUnit extends Displayable{
     }
 
     public void changeValue (double toAdd) {
+        System.out.println(myLabel+" "+myValue);
         myValue += toAdd;
         updateObservers();
     }

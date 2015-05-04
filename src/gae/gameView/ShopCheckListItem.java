@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// NINA SUN
+
 package gae.gameView;
 
 import engine.gameobject.GameObject;
@@ -20,6 +23,8 @@ import javafx.scene.text.Text;
  * @author Nina Sun
  */
 public class ShopCheckListItem implements CheckListItem {
+    public static final int IMAGE_HEIGHT = 50;
+    public static final String PRICE_ERROR = "No weapon value found";
     private Placeable placeable;
     private CheckBox checkbox;
 
@@ -29,29 +34,17 @@ public class ShopCheckListItem implements CheckListItem {
     }
 
     /**
-     * Returns the node to be added to the checklist, showing a thumbnail, name and checkbox
+     * Returns the node to be added to the checklist, showing a thumbnail, information, and checkbox
      * 
      * @author Nina Sun
      */
     public Node getNode () {
-        HBox hbox = new HBox(10);
+        HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
         Graphic graphic = placeable.getGraphic().clone();
-        graphic.setHeight(50);
+        graphic.setHeight(IMAGE_HEIGHT);
         Node image = graphic.getResizedGraphic(1);
-        Label label = new Label(placeable.getName());
-        Text description = new Text(placeable.getDescription());
-        System.out.println(placeable.getWeapon().getValue());
-        String value;
-        try {
-            value = Double.toString(placeable.getWeapon().getValue());
-        }
-        catch (Exception e) {
-            value = "No weapon value found";
-        }
-        Text price = new Text("Price: " + value);
-        VBox vbox = new VBox(label, description, price);
-        hbox.getChildren().addAll(image, vbox, checkbox);
+        hbox.getChildren().addAll(image, createPlaceableInfo(), checkbox);
         return hbox;
     }
 
@@ -66,6 +59,33 @@ public class ShopCheckListItem implements CheckListItem {
      */
     public Placeable getPlaceable () {
         return placeable;
+    }
+
+    /**
+     * Returns a VBox of information about the placeable for the shop: name, description, price
+     * 
+     * @return node
+     */
+    private Node createPlaceableInfo () {
+        Label label = new Label(placeable.getName());
+        Text description = new Text(placeable.getDescription());
+        return new VBox(label, description, createPriceInfo());
+    }
+
+    /**
+     * Returns the price tag for the item in the shop
+     * 
+     * @return node
+     */
+    private Node createPriceInfo () {
+        String value;
+        try {
+            value = Double.toString(placeable.getWeapon().getValue());
+        }
+        catch (Exception e) {
+            value = PRICE_ERROR;
+        }
+        return new Text(value);
     }
 
 }

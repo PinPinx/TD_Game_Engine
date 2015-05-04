@@ -23,8 +23,8 @@
       <myUnit>
         <changed>false</changed>
         <obs/>
-        <myValue>1000000</myValue>
-        <myLabel></myLabel>
+        <myValue>10000.0</myValue>
+        <myLabel>Health</myLabel>
       </myUnit>
     </myWallet>
   </myPlayer>
