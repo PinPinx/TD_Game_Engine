@@ -64,7 +64,7 @@ public class PathFree implements Path {
     }
 
     @Override
-    public PointSimple getNextLocation (double distance, double speed, PointSimple current)
+    public PointSimple getNextLocation (double distance, double speed, PointSimple current, int pathIndex)
                                                                                            throws EndOfPathException {
         GridCell currentCell = myTrans.transformWorldToGrid(current);
         GridCell nextCell = myPath.get(currentCell);

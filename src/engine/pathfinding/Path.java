@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Kaighn Kevlin kgk6
+
 package engine.pathfinding;
 
 import voogasalad.util.pathsearch.pathalgorithms.NoPathExistsException;
@@ -20,7 +23,7 @@ public interface Path {
      * @return point of the next destination
      * @throws EndOfPathException if no more points exist on the path
      */
-    public PointSimple getNextLocation (double distance, double speed, PointSimple current)
+    public PointSimple getNextLocation (double distance, double speed, PointSimple current, int pathIndex)
                                                                                            throws EndOfPathException;
 
     /**

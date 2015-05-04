@@ -45,6 +45,10 @@ import engine.goals.HealthGoal;
 import engine.goals.NoCurrentEventGoal;
 import engine.goals.ScoreGoal;
 import engine.goals.TimerGoal;
+import engine.pathfinding.Path;
+import engine.pathfinding.PathComposite;
+import engine.pathfinding.PathFixed;
+import engine.pathfinding.PathSegmentStraight;
 import engine.shop.ShopModel;
 import engine.shop.ShopModelSimple;
 import engine.shop.wallet.ConcreteWallet;
@@ -66,9 +70,15 @@ public class GameWriterConcrete2 extends Application {
 	private StoryBoard makeStoryBoard(GameWorld world, Player player) {
 		List<GameObject> waveObjects = new ArrayList<>();
 		Mover moverPath = new MoverPath(world.getPath(), .25);
+		PathComposite compositePath = new PathComposite();
+		Path p1 = new PathFixed();
+		p1.addPathSegment(new PathSegmentStraight(new PointSimple(100,100), new PointSimple(500,500)));
+		compositePath.addPath(world.getPath());
+		compositePath.addPath(p1);
+		Mover moverPathHybrid = new MoverPath(compositePath, .25);
 		for (int i = 0; i < 10; i++) {
 			GameObject toAdd = new GameObjectSimpleTest();
-			toAdd.setMover(moverPath);
+			toAdd.setMover(moverPathHybrid.clone());
 			waveObjects.add(toAdd);
 		}
 		GameObjectQueue q = new ConcreteQueue(waveObjects);

@@ -159,6 +159,25 @@
                     <myCollisionEngine class="SuperAwesomeDemo.CollisionEngineAwesome">
                       <myTable>
                         <entry>
+                          <SuperAwesomeDemo.PowerupType>
+                            <superType class="engine.gameobject.labels.TypeBase">
+                              <myName>Base</myName>
+                            </superType>
+                            <myName>Powerup</myName>
+                          </SuperAwesomeDemo.PowerupType>
+                          <map>
+                            <entry>
+                              <engine.gameobject.test.FriendlyTowerType>
+                                <superType class="engine.gameobject.labels.TypeBase">
+                                  <myName>Base</myName>
+                                </superType>
+                                <myName>Tower</myName>
+                              </engine.gameobject.test.FriendlyTowerType>
+                              <engine.interactions.BuffImparter/>
+                            </entry>
+                          </map>
+                        </entry>
+                        <entry>
                           <SuperAwesomeDemo.FriendlyProjectileType>
                             <superType class="engine.gameobject.labels.TypeBase">
                               <myName>Base</myName>
@@ -210,25 +229,6 @@
                                 </superType>
                                 <myName>Neutral</myName>
                               </SuperAwesomeDemo.NeutralGameType>
-                              <engine.interactions.BuffImparter/>
-                            </entry>
-                          </map>
-                        </entry>
-                        <entry>
-                          <SuperAwesomeDemo.PowerupType>
-                            <superType class="engine.gameobject.labels.TypeBase">
-                              <myName>Base</myName>
-                            </superType>
-                            <myName>Powerup</myName>
-                          </SuperAwesomeDemo.PowerupType>
-                          <map>
-                            <entry>
-                              <engine.gameobject.test.FriendlyTowerType>
-                                <superType class="engine.gameobject.labels.TypeBase">
-                                  <myName>Base</myName>
-                                </superType>
-                                <myName>Tower</myName>
-                              </engine.gameobject.test.FriendlyTowerType>
                               <engine.interactions.BuffImparter/>
                             </entry>
                           </map>
@@ -397,9 +397,15 @@
                           <pseudoClassStates class="com.sun.javafx.css.PseudoClassState">
                             <bits/>
                           </pseudoClassStates>
+                          <accessibleRole class="javafx.beans.property.SimpleObjectProperty">
+                            <value class="javafx.scene.AccessibleRole">IMAGE_VIEW</value>
+                            <valid>false</valid>
+                            <bean class="javafx.scene.image.ImageView" reference="../.."/>
+                            <name>accessibleRole</name>
+                          </accessibleRole>
                           <image class="javafx.scene.image.ImageView$1">
                             <value class="javafx.scene.image.Image">
-                              <url>file:/Users/brandonchoi/Documents/CS308/voogasalad_RDatGV/bin/images/BoxheadHero.png</url>
+                              <url>file:/C:/Users/Owner/Documents/GitHub/voogasalad_RDatGV/bin/images/BoxheadHero.png</url>
                               <progress>
                                 <value>1.0</value>
                                 <valid>true</valid>
@@ -3448,22 +3454,22 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                         </entry>
                         <entry>
                           <voogasalad.util.pathsearch.graph.GridCell>
-                            <myRow>9</myRow>
-                            <myCol>3</myCol>
-                          </voogasalad.util.pathsearch.graph.GridCell>
-                          <voogasalad.util.pathsearch.graph.GridCell>
-                            <myRow>9</myRow>
-                            <myCol>4</myCol>
-                          </voogasalad.util.pathsearch.graph.GridCell>
-                        </entry>
-                        <entry>
-                          <voogasalad.util.pathsearch.graph.GridCell>
                             <myRow>0</myRow>
                             <myCol>8</myCol>
                           </voogasalad.util.pathsearch.graph.GridCell>
                           <voogasalad.util.pathsearch.graph.GridCell>
                             <myRow>0</myRow>
                             <myCol>9</myCol>
+                          </voogasalad.util.pathsearch.graph.GridCell>
+                        </entry>
+                        <entry>
+                          <voogasalad.util.pathsearch.graph.GridCell>
+                            <myRow>9</myRow>
+                            <myCol>3</myCol>
+                          </voogasalad.util.pathsearch.graph.GridCell>
+                          <voogasalad.util.pathsearch.graph.GridCell>
+                            <myRow>9</myRow>
+                            <myCol>4</myCol>
                           </voogasalad.util.pathsearch.graph.GridCell>
                         </entry>
                         <entry>
@@ -3568,22 +3574,22 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                         </entry>
                         <entry>
                           <voogasalad.util.pathsearch.graph.GridCell>
-                            <myRow>0</myRow>
-                            <myCol>9</myCol>
-                          </voogasalad.util.pathsearch.graph.GridCell>
-                          <voogasalad.util.pathsearch.graph.GridCell>
-                            <myRow>1</myRow>
-                            <myCol>9</myCol>
-                          </voogasalad.util.pathsearch.graph.GridCell>
-                        </entry>
-                        <entry>
-                          <voogasalad.util.pathsearch.graph.GridCell>
                             <myRow>9</myRow>
                             <myCol>4</myCol>
                           </voogasalad.util.pathsearch.graph.GridCell>
                           <voogasalad.util.pathsearch.graph.GridCell>
                             <myRow>9</myRow>
                             <myCol>5</myCol>
+                          </voogasalad.util.pathsearch.graph.GridCell>
+                        </entry>
+                        <entry>
+                          <voogasalad.util.pathsearch.graph.GridCell>
+                            <myRow>0</myRow>
+                            <myCol>9</myCol>
+                          </voogasalad.util.pathsearch.graph.GridCell>
+                          <voogasalad.util.pathsearch.graph.GridCell>
+                            <myRow>1</myRow>
+                            <myCol>9</myCol>
                           </voogasalad.util.pathsearch.graph.GridCell>
                         </entry>
                         <entry>
@@ -4008,22 +4014,22 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                         </entry>
                         <entry>
                           <voogasalad.util.pathsearch.graph.GridCell>
-                            <myRow>0</myRow>
-                            <myCol>5</myCol>
-                          </voogasalad.util.pathsearch.graph.GridCell>
-                          <voogasalad.util.pathsearch.graph.GridCell>
-                            <myRow>0</myRow>
-                            <myCol>6</myCol>
-                          </voogasalad.util.pathsearch.graph.GridCell>
-                        </entry>
-                        <entry>
-                          <voogasalad.util.pathsearch.graph.GridCell>
                             <myRow>9</myRow>
                             <myCol>0</myCol>
                           </voogasalad.util.pathsearch.graph.GridCell>
                           <voogasalad.util.pathsearch.graph.GridCell>
                             <myRow>9</myRow>
                             <myCol>1</myCol>
+                          </voogasalad.util.pathsearch.graph.GridCell>
+                        </entry>
+                        <entry>
+                          <voogasalad.util.pathsearch.graph.GridCell>
+                            <myRow>0</myRow>
+                            <myCol>5</myCol>
+                          </voogasalad.util.pathsearch.graph.GridCell>
+                          <voogasalad.util.pathsearch.graph.GridCell>
+                            <myRow>0</myRow>
+                            <myCol>6</myCol>
                           </voogasalad.util.pathsearch.graph.GridCell>
                         </entry>
                         <entry>
@@ -4987,7 +4993,32 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <speedModifier>1.0</speedModifier>
                           <myDistance>0.0</myDistance>
                           <frozen>false</frozen>
-                          <myPath class="engine.pathfinding.PathFree" reference="../../../../../myWorld/myPath"/>
+                          <myPath class="engine.pathfinding.PathComposite">
+                            <myPaths>
+                              <engine.pathfinding.PathFree reference="../../../../../../../myWorld/myPath"/>
+                              <engine.pathfinding.PathFixed>
+                                <myPathSegments class="linked-list">
+                                  <engine.pathfinding.PathSegmentStraight>
+                                    <start>
+                                      <myPoint>
+                                        <x>100.0</x>
+                                        <y>100.0</y>
+                                        <hash>0</hash>
+                                      </myPoint>
+                                    </start>
+                                    <end>
+                                      <myPoint>
+                                        <x>500.0</x>
+                                        <y>500.0</y>
+                                        <hash>0</hash>
+                                      </myPoint>
+                                    </end>
+                                  </engine.pathfinding.PathSegmentStraight>
+                                </myPathSegments>
+                              </engine.pathfinding.PathFixed>
+                            </myPaths>
+                          </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -5061,7 +5092,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5134,7 +5172,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5207,7 +5252,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5280,7 +5332,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5353,7 +5412,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5426,7 +5492,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5499,7 +5572,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5572,7 +5652,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5645,7 +5732,14 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                           <myTitle></myTitle>
                           <index>0</index>
                         </myHealth>
-                        <myMover class="engine.gameobject.MoverPath" reference="../../engine.gameobject.GameObjectSimpleTest/myMover"/>
+                        <myMover class="engine.gameobject.MoverPath">
+                          <inherentSpeed>0.25</inherentSpeed>
+                          <speedModifier>1.0</speedModifier>
+                          <myDistance>0.0</myDistance>
+                          <frozen>false</frozen>
+                          <myPath class="engine.pathfinding.PathComposite" reference="../../../engine.gameobject.GameObjectSimpleTest/myMover/myPath"/>
+                          <myPathIndex>0</myPathIndex>
+                        </myMover>
                         <myBuffs>
                           <buffList/>
                           <immunityList/>
@@ -5705,16 +5799,16 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                   <myFrameDuration>2400</myFrameDuration>
                   <myFramesSinceStart>0</myFramesSinceStart>
                   <myReleaseTimes>
-                    <int>1257</int>
-                    <int>2244</int>
-                    <int>453</int>
-                    <int>264</int>
-                    <int>86</int>
-                    <int>1533</int>
-                    <int>1593</int>
-                    <int>1570</int>
-                    <int>1643</int>
-                    <int>1910</int>
+                    <int>1470</int>
+                    <int>911</int>
+                    <int>875</int>
+                    <int>1884</int>
+                    <int>2015</int>
+                    <int>1531</int>
+                    <int>1232</int>
+                    <int>1819</int>
+                    <int>520</int>
+                    <int>911</int>
                   </myReleaseTimes>
                 </engine.events.RandomSpanWave>
                 <engine.events.ConstantSpacingWave>
@@ -6115,6 +6209,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -6560,6 +6655,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -7005,6 +7101,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -7450,6 +7547,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -7895,6 +7993,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -8340,6 +8439,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -8785,6 +8885,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -9230,6 +9331,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -9675,6 +9777,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -10120,6 +10223,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                               </engine.pathfinding.PathSegmentBezier>
                             </myPathSegments>
                           </myPath>
+                          <myPathIndex>0</myPathIndex>
                         </myMover>
                         <myBuffs>
                           <buffList/>
@@ -11009,7 +11113,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
           <engine.gameobject.test.TestTower reference="../../../../myLevels/engine.game.ConcreteLevel/myWinningGoals/engine.goals.EventsCompleteGoal/myStoryBoard/eventList/engine.events.RandomSpanWave/myWorld/myObjects/engine.gameobject.test.TestTower"/>
         </entry>
         <entry>
-          <string>TestTower0.4663902005481637</string>
+          <string>TestTower0.018438253775275193</string>
           <engine.gameobject.test.TestTower>
             <myType class="engine.gameobject.test.FriendlyTowerType">
               <superType class="engine.gameobject.labels.TypeBase">
@@ -11181,8 +11285,8 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
                 </upgradeMap>
                 <obsSet class="com.sun.javafx.collections.ObservableSetWrapper">
                   <backingSet>
-                    <engine.gameobject.weapon.firingrate.FiringRateUpgrade reference="../../../../myFiringRate"/>
                     <engine.gameobject.weapon.range.RangeUpgrade reference="../../../../myRange"/>
+                    <engine.gameobject.weapon.firingrate.FiringRateUpgrade reference="../../../../myFiringRate"/>
                     <engine.gameobject.units.directdamage.DamageBuff reference="../../../../myProjectile/myCollider/collisionBuffs/engine.gameobject.units.directdamage.DamageBuff"/>
                     <engine.gameobject.weapon.firingrate.FiringRateUpgrade>
                       <increment>0.5</increment>
@@ -11365,7 +11469,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==</hb>
               <index>0</index>
             </myGraphic>
             <myShopTag class="engine.shop.ShopTagSimple">
-              <myName>TestTower0.4663902005481637</myName>
+              <myName>TestTower0.018438253775275193</myName>
               <myDescription>Just a test tower; nothing special here...</myDescription>
               <myShopGraphic>
                 <myTitle></myTitle>

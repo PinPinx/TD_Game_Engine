@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// Kaighn Kevlin kgk6
+
 package engine.pathfinding;
 
 import java.util.LinkedList;
@@ -26,15 +29,12 @@ public class PathFixed implements Path {
     }
 
     @Override
-    public PointSimple getNextLocation (double distance, double speed, PointSimple current)
-                                                                                           throws EndOfPathException {
-        double count = 0;
+    public PointSimple getNextLocation (double distance, double speed, PointSimple current, int pathIndex)                                                                                throws EndOfPathException {
+        double distanceCount = 0;
         for (PathSegment seg : myPathSegments) {
-            count += seg.getLength();
-            if (count >= distance) {
-                PathSegment pathSeg = seg;
-                // add parenthesis to account for order of operations
-                return pathSeg.getPoint(distance - (count - seg.getLength()));
+            distanceCount += seg.getLength();
+            if (distanceCount >= distance) {
+                return seg.getPoint(distance - (distanceCount - seg.getLength()));
             }
         }
         throw new EndOfPathException();

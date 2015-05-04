@@ -5,7 +5,6 @@ import engine.pathfinding.EndOfPathException;
 import engine.pathfinding.Path;
 import engine.pathfinding.PathFixed;
 
-
 /**
  * A mover that moves according to a pathfinder.
  * 
@@ -14,52 +13,62 @@ import engine.pathfinding.PathFixed;
  */
 @Settable
 public class MoverPath extends BasicMover {
-	Path myPath;
-	
+	private Path myPath;
+	private int myPathIndex;
+
 	public MoverPath() {
-	    super(0);
-	    this.setSpeed(1);
-	    myPath = new PathFixed();
+		super(0);
+		this.setSpeed(1);
+		myPath = new PathFixed();
 	}
-	
-	public MoverPath(Path pf, double speed){
-	        super(speed);
+
+	public MoverPath(Path pf, double speed) {
+		super(speed);
 		myPath = pf;
 	}
-	
-	 /**
-	  * Moves according to path i.e. returns correct point on the path
-	  */
-	@Override
-	public PointSimple move(PointSimple current) throws EndOfPathException{
-	        myDistance += currentSpeed();
-	        return myPath.getNextLocation(myDistance, currentSpeed(), current);
-	}
-	
-	@Settable
-	public void setPath(Path path) {
-	    myPath = path;
-	}
-	
-	@Settable
-	public void setDistance(double distance) {
-	    myDistance = distance;
-	}
-	
+
 	/**
-	 * This sets the mover such that it will pick up on the path the spawner spawned this at. 
+	 * Moves according to path i.e. returns correct point on the path
 	 */
 	@Override
-	public Mover clone(){
-	    MoverPath clone = new MoverPath(myPath, inherentSpeed);
-	    clone.myDistance = myDistance;
-	    return clone;
+	public PointSimple move(PointSimple current) throws EndOfPathException {
+		myDistance += currentSpeed();
+		try {
+			return myPath.getNextLocation(myDistance, currentSpeed(), current,
+					myPathIndex);
+		} catch (EndOfPathException e) {
+			myPathIndex++;
+			myDistance = 0;
+			return myPath.getNextLocation(myDistance, currentSpeed(), current,
+					myPathIndex);
+		}
 	}
-	
+
+	@Settable
+	public void setPath(Path path) {
+		myPath = path;
+	}
+
+	@Settable
+	public void setDistance(double distance) {
+		myDistance = distance;
+	}
+
+	/**
+	 * This sets the mover such that it will pick up on the path the spawner
+	 * spawned this at.
+	 */
+	@Override
+	public Mover clone() {
+		MoverPath clone = new MoverPath(myPath, inherentSpeed);
+		clone.myDistance = myDistance;
+		return clone;
+	}
+
 	@Settable
 	@Override
 	public void setSpeed(double speed) {
-	    super.setSpeed(speed);
+		super.setSpeed(speed);
 	}
-	
+
 }
