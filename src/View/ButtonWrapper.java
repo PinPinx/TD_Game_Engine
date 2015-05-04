@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// COSETTE GOLDSTEIN
+
 package View;
 
 import java.util.function.Consumer;
@@ -24,8 +27,7 @@ public class ButtonWrapper {
 
     private static final String DEFAULT_TEXT = "";
 
-//    @XStreamOmitField
-//    private transient Button myButton;
+
     private Goal myEnableCondition;
     private String myLabel;
     private Consumer<? extends Object> myAction;

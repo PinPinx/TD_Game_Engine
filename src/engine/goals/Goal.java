@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// COSETTE GOLDSTEIN
+
 package engine.goals;
 
 import java.util.Observer;
