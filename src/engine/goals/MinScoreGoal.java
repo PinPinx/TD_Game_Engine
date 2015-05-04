@@ -8,8 +8,11 @@ import engine.game.Player;
 
 
 /**
- * This class represents a goal that listens to the player and changes a boolean flag if
- * the player's score has reached a certain value.
+ * This class checks the condition that the score of a given player has reached a certain minimum
+ * value. Thus, it requires access to the player that it should listen to and a minimum score that
+ * it should check for. An example of when to use this class would be if a game designer wanted a
+ * level to end as soon as the player reached a certain goal.
+ * 
  *
  * @author Sierra Smith
  *
@@ -38,7 +41,7 @@ public class MinScoreGoal extends PlayerGoal {
 
     @Override
     protected void checkCondition (Player p) {
-       setIsSatisfied(p.getScore() >= myScoreGoal);
+        setIsSatisfied(p.getScore() >= myScoreGoal);
     }
 
 }

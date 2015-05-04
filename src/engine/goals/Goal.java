@@ -8,9 +8,13 @@ import java.util.Observer;
 
 /**
  * This abstract class is designed to set the framework for encapsulating a condition that can be
- * either satisfied or not satisfied. It
+ * either satisfied or not satisfied. Any class extending it must implement the Observer interface,
+ * as Goals are intended to observe various objects to which the condition pertains. There is an
+ * assumption that the "isSatisfied" boolean will always be updated and reflect the current status
+ * of the condition, as the method to check the status of the condition returns the boolean that
+ * stores the current status. An example of how to implement this class can be found by looking at
+ * the PlayerGoal and it's child class MinScoreGoal.
  * 
- * This class observes some GameObject and changes a field once a particular condition is met
  * 
  * @author Sierra Smith
  * @author Cosette Goldstein
@@ -32,7 +36,8 @@ public abstract class Goal implements Observer {
     }
 
     /**
-     * Sets the boolean 
+     * Sets the boolean to the received value
+     * 
      * @param satisfied
      */
     protected void setIsSatisfied (boolean satisfied) {
