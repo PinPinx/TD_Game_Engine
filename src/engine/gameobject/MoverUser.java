@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Danny Oh
 package engine.gameobject;
 
 import engine.fieldsetting.Settable;
@@ -9,13 +11,12 @@ public class MoverUser extends BasicMover {
     private DirectionHandler myHandler;
     
     public MoverUser(double speed) {
-        this.inherentSpeed = speed;
+        setSpeed(speed);
         myHandler = new DirectionHandler();
     }
 
     public MoverUser () {
-        this.inherentSpeed = 1;
-        myHandler = new DirectionHandler();
+        this(1);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class MoverUser extends BasicMover {
 
     @Override
     public Mover clone () {
-        MoverUser mover =  new MoverUser();
+        MoverUser mover =  new MoverUser(getSpeed());
         mover.myHandler = myHandler.clone();
         return mover;
     }

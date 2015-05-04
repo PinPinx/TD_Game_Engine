@@ -32,8 +32,8 @@ public class MoverPath extends BasicMover {
 	  */
 	@Override
 	public PointSimple move(PointSimple current) throws EndOfPathException{
-	        myDistance += currentSpeed();
-	        return myPath.getNextLocation(myDistance, currentSpeed(), current);
+	        setDistance(getDistance() + currentSpeed());
+	        return myPath.getNextLocation(getDistance(), currentSpeed(), current);
 	}
 	
 	@Settable
@@ -43,7 +43,7 @@ public class MoverPath extends BasicMover {
 	
 	@Settable
 	public void setDistance(double distance) {
-	    myDistance = distance;
+	    setDistance(distance);
 	}
 	
 	/**
@@ -51,8 +51,8 @@ public class MoverPath extends BasicMover {
 	 */
 	@Override
 	public Mover clone(){
-	    MoverPath clone = new MoverPath(myPath, inherentSpeed);
-	    clone.myDistance = myDistance;
+	    MoverPath clone = new MoverPath(myPath, getSpeed());
+	    clone.setDistance(this.getDistance());
 	    return clone;
 	}
 	

@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Danny Oh
 package engine.gameobject.units;
 
 import java.awt.Color;
@@ -11,11 +13,12 @@ import engine.gameobject.labels.Type;
  *
  */
 public class ZombieBuff extends Buff{
-
+    private final int[] RGBVal = {46, 139, 87};
     private Type myType;
+    private final static int INFINITE_DURATION = 10000;
     
     public ZombieBuff () {
-        super(0);
+        super(INFINITE_DURATION);
         myType = new SimpleType();
     }
 
@@ -36,8 +39,7 @@ public class ZombieBuff extends Buff{
     @Override
     public void apply (GameObject myUnit) {
         myUnit.setLabel(myType);
-        float[] hsbvals = new float[3];
-        Color.RGBtoHSB(46, 139, 87, hsbvals);
+        float[] hsbvals = RGBtoHSB(RGBVal);
         adjustEffect(myUnit, -hsbvals[0], -hsbvals[1], -hsbvals[2], 0);
     }
 
@@ -46,6 +48,9 @@ public class ZombieBuff extends Buff{
         //Do nothing
     }
 
+    protected void changeOverTime(GameObject myUnit){
+        myUnit.changeHealth(-1);//Zombies aren't immortal, die over time
+    }
     @Override
     public boolean isStrongerBuff (Buff otherBuff) {
         return true;//ZombieBuffs override each other every time
@@ -54,6 +59,10 @@ public class ZombieBuff extends Buff{
     @Override
     public Buff clone () {
         return new ZombieBuff(myType);
+    }
+    
+    private float[] RGBtoHSB(int[] RGBVals){
+        return Color.RGBtoHSB(RGBVal[0],RGBVal[1],RGBVal[2], null);
     }
 
 }

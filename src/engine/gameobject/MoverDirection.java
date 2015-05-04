@@ -72,6 +72,6 @@ public class MoverDirection extends MoverPoint {
 
     @Override
     public Mover clone () {
-        return new MoverDirection(getPoint(), inherentSpeed, distanceLimit);
+        return new MoverDirection(getPoint(), getSpeed(), distanceLimit);
     }
 }

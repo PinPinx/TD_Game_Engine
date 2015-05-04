@@ -1,15 +1,17 @@
+// This entire file is part of my masterpiece.
+// Danny Oh
+
 package engine.gameobject;
 
 import engine.fieldsetting.Settable;
 import engine.pathfinding.EndOfPathException;
 
-//TODO: These instance variables should be private(?)
 @Settable
 public abstract class BasicMover implements Mover {
-    double inherentSpeed;
-    double speedModifier;
-    double myDistance;
-    boolean frozen;
+    private double inherentSpeed;
+    private double speedModifier;
+    private double myDistance;
+    private boolean frozen;
 
     public BasicMover () {
         this(0);
@@ -47,9 +49,14 @@ public abstract class BasicMover implements Mover {
     public abstract Mover clone ();
 
     protected double currentSpeed () {
-        if (!frozen) {
-            return inherentSpeed * speedModifier;
-        }
-        return 0;
+        return (frozen ? 0 : 1) * inherentSpeed * speedModifier;
+    }
+    
+    protected double getDistance() {
+        return myDistance;
+    }
+    
+    protected void setDistance(double distance) {
+        myDistance = distance;
     }
 }

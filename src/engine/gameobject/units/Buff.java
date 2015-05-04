@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Danny Oh
 package engine.gameobject.units;
 
 import java.util.ArrayList;
@@ -22,12 +24,14 @@ public abstract class Buff implements Upgrade {
     private int duration;
     private int timeSinceStart;
     private UpgradeType type;
-    private List<Observer> observers = new ArrayList<>();
-
+    private List<Observer> observers;
+    private final int FRAMERATE = 60;
+    
     public Buff (double duration) {
-        this.duration = (int)(60 * duration);
+        this.duration = (int)(FRAMERATE * duration);
         timeSinceStart = 0;
         type = UpgradeType.COLLISION; // could be overridden
+        observers = new ArrayList<>();
     }
 
     /**
@@ -56,7 +60,7 @@ public abstract class Buff implements Upgrade {
     }
 
     protected void changeOverTime (GameObject myUnit) {
-
+        
     }
 
     protected int getDuration () {

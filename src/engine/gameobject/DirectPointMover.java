@@ -26,7 +26,7 @@ public class DirectPointMover extends MoverPoint {
 
     @Override
     public Mover clone () {
-        return new DirectPointMover(getPoint(), inherentSpeed);
+        return new DirectPointMover(getPoint(), getSpeed());
     }
 
 }
