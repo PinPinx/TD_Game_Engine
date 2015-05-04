@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// Danny Oh
 package engine.gameobject.units;
 
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class BuffTracker {
      * @param myObject
      */
     public void update (GameObject myObject) {
-        ArrayList<Buff> removeBuffer = new ArrayList<Buff>();
+        List<Buff> removeBuffer = new ArrayList<Buff>();
         for (Buff buff : buffList) {
             if (buff.timeLeft() <= 0) {
                 removeBuffer.add(buff);
