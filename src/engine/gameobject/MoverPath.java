@@ -43,7 +43,7 @@ public class MoverPath extends BasicMover {
 	
 	@Settable
 	public void setDistance(double distance) {
-	    setDistance(distance);
+	    super.setDistance(distance);
 	}
 	
 	/**
