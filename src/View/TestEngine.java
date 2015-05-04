@@ -1,77 +1,55 @@
 package View;
 
-import java.util.ArrayList;
-import java.util.List;
-import engine.game.ConcreteGame;
-import engine.game.ConcreteLevel;
-import engine.game.ConcreteLevelBoard;
-import engine.game.Player;
-import engine.goals.Goal;
-import engine.goals.HealthDepletionGoal;
-import engine.goals.MinScoreGoal;
+import engine.game.Game;
 import gae.gameView.Main;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import xml.DataManager;
+
 
 public class TestEngine extends Application {
 
-//    @Override
-//    public void start (Stage primaryStage) throws Exception {
-//        ConcreteLevelBoard board=new ConcreteLevelBoard();
-//        Group root=new Group();
-//        primaryStage.setHeight(Main.SCREEN_HEIGHT); // needs to account for scaling; add constants
-//        primaryStage.setWidth(Main.SCREEN_WIDTH);// needs to account for scaling; add constants
-//        Scene scene=new Scene(root);
-//        Player myPlayer=new Player("Boi",100,100,100);
-//        View view = new ConcreteView(new ConcreteGame(myPlayer,board),root,Main.SCREEN_WIDTH,Main.SCREEN_HEIGHT);
-//        HealthDepletionGoal healthy=new HealthDepletionGoal(myPlayer);
-//        ScoreGoal score=new ScoreGoal(myPlayer,200);
-//        List<Goal> list=new ArrayList<Goal>();
-//        list.add(healthy);
-//        List<Goal> list2=new ArrayList<Goal>();
-//        list2.add(score);
-//        List<Goal> list3=new ArrayList<Goal>();
-//        ScoreGoal score2=new ScoreGoal(myPlayer,300);
-//        list3.add(score2);
-//        board.addLevel(new ConcreteLevel("images/Park_Path.png",list2,list));
-//        board.addLevel(new ConcreteLevel("images/example_path.jpeg",list3,list));
-//        view.initializeGameWorld();
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
-//    }
-    
+//    private static final String FILE_SOURCE = "src/xml/TowerOffense.xml";
+  private static final String FILE_SOURCE = "src/xml/GameFreePath.xml";
+
+//    private static final String FILE_SOURCE = "src/SuperAwesomeDemo/SuperAwesomeGame.xml";
+
     @Override
     public void start (Stage primaryStage) throws Exception {
-        ConcreteLevelBoard board=new ConcreteLevelBoard();
-        Group root=new Group();
-        primaryStage.setHeight(Main.SCREEN_HEIGHT); // needs to account for scaling; add constants
-        primaryStage.setWidth(Main.SCREEN_WIDTH);// needs to account for scaling; add constants
-        //BorderPane pane = new BorderPane();
-        Scene scene=new Scene(root);
-        Player myPlayer=new Player("Boi",100,100,100);
-        View view = new ViewConcrete2(new ConcreteGame(myPlayer,board),Main.SCREEN_WIDTH,Main.SCREEN_HEIGHT);
-        HealthDepletionGoal healthy=new HealthDepletionGoal(myPlayer);
-        MinScoreGoal score=new MinScoreGoal(myPlayer,200);
-        List<Goal> list=new ArrayList<Goal>();
-        list.add(healthy);
-        List<Goal> list2=new ArrayList<Goal>();
-        list2.add(score);
-        List<Goal> list3=new ArrayList<Goal>();
-        MinScoreGoal score2=new MinScoreGoal(myPlayer,300);
-        list3.add(score2);
-        board.addLevel(new ConcreteLevel("images/Park_Path.png",list2,list));
-        board.addLevel(new ConcreteLevel("images/example_path.jpeg",list3,list));
-        //pane.setCenter(view.initializeView());
+        Group root = new Group();
+        primaryStage.setHeight(600);
+        primaryStage.setWidth(950);
+        // primaryStage.setHeight(Main.SCREEN_HEIGHT); // needs to account for scaling; add
+        // constants
+        // primaryStage.setWidth(Main.SCREEN_WIDTH);// needs to account for scaling; add constants
+
+        Scene scene = new Scene(root);
+        Game game = loadGame();
+        EngineView view = new ViewConcrete2(game, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+
+        // pane.setCenter(view.initializeView());
+
+        // view.addButton(addWavesButtonTest(event,myPlayer), 0, 0);
+
         root.getChildren().add(view.initializeView());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    private Game loadGame () {
+        // GameWriter gw = new GameWriter();
+        // GameWorld world = gw.makeWorld();
+        // Player player = gw.makePlayer();
+        // return gw.makeGame(player, world, gw.makeShop(player, world));
+        // DataManager.addBtn();
+        return DataManager.readFromXML(Game.class, FILE_SOURCE);
+
+    }
+
+    public static void main (String[] args) {
         launch(args);
-}
-    
+    }
+
 }

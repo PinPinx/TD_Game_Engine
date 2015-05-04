@@ -1,24 +1,45 @@
 package gae.tabView;
 
-import javafx.scene.control.Label;
+import engine.shop.ShopModel;
+import gae.shopEditor.ShopEditor;
 import javafx.scene.control.Tab;
 
-public class ShopTab {
+
+/**
+ * Shop editor tab
+ * 
+ * @author JohnGilhuly
+ *
+ */
+
+public class ShopTab implements ITab {
     private Tab baseNode;
-    
-    public ShopTab() {
+    private ShopEditor editor;
+
+    public ShopTab () {
         initialize();
     }
 
     private void initialize () {
         baseNode = new Tab();
         baseNode.setText("Shop");
-        
-        baseNode.setContent(new Label("Shop Tab"));
+
+        editor = new ShopEditor();
+        baseNode.setContent(editor.getObject());
         baseNode.setClosable(false);
     }
-    
-    public Tab getBaseTabNode() {
+
+    @Override
+    public Tab getBaseTabNode () {
         return baseNode;
+    }
+
+    /**
+     * Used to connect the shop and game
+     * 
+     * @return
+     */
+    public ShopModel getShop () {
+        return editor.getShop();
     }
 }

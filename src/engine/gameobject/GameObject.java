@@ -1,37 +1,71 @@
 package engine.gameobject;
 
-import java.util.List;
-import engine.gameobject.weapon.Weapon;
+import engine.gameobject.behaviors.EndBehaviorful;
+import engine.gameobject.labels.Type;
+import engine.gameobject.units.Buffable;
+import engine.gameobject.units.Colliding;
+import engine.gameobject.units.Firing;
+import engine.shop.RangeDisplay;
+import gameworld.ObjectCollection;
 
 
 /**
- * 
+ *
  * @author Jeremy
+ * @author Kaighn
  *
  */
-public interface GameObject extends Movable, Health {
+
+public interface GameObject extends Firing, Colliding, Buffable, Movable, Health, Purchasable<GameObject>, EndBehaviorful {
+
     // public void updateGraphics ();//cannot implement yet
-    /**
-     * Sets the GameObject's Weapon
-     */
-    public void setWeapon (Weapon weapon);
 
     /**
-     * Returns the GameObject's Weapon
+     * Updates the object accordingly within the objectcollection (usually gameworld) given
+     *
+     * @param world
      */
-    public Weapon getWeapon();
+    public void update (ObjectCollection world);
+    
+    /**
+     * Performs the ondeath behavior of the object upon the world
+     * @param world
+     */
+    public void onDeath (ObjectCollection world);
+    
+    public Mover getMover ();
+
+    public Type getLabel ();
+
+    //public void setGraphic (Graphic graphic);
+
+    public void setLabel (Type label);
 
     /**
-     * Labels allow the GameEngine to differentiate
-     * 
-     * @return: A string
+     * Returns the Cartesian coordinate of the game object.
      */
-    public String getLabel ();
-
-    public GameObject clone ();
-
     public PointSimple getPoint ();
 
+    /**
+     * Sets the object's location to point
+     *
+     * @param point
+     */
+    public void setPoint (PointSimple point);
+
+    /**
+     * Sets the GameObject's Mover
+     */
+    public void setMover (Mover mover);
+
+    public void setHealth (Health clone);
+    
+    public RangeDisplay getRangeDisplay ();
+    
     public Graphic getGraphic ();
+    
+    public Health getHealth ();
+
+    public void setGraphic (Graphic myGraphic);
 
 }

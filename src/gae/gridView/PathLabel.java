@@ -8,6 +8,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
+/**
+ * Label class made to attach to the paths as an index
+ *
+ * @author Kei
+ *
+ */
 public class PathLabel extends Region {
     private static final int CIRCLE_RADIUS = 10;
     private Label label;
@@ -21,7 +27,7 @@ public class PathLabel extends Region {
         stack.getChildren().addAll(circle, label);
         StackPane.setAlignment(circle, Pos.CENTER);
         StackPane.setAlignment(label, Pos.CENTER);
-        this.getChildren().add(stack);
+        getChildren().add(stack);
     }
 
     public void changeValue (int newValue) {

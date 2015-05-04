@@ -2,25 +2,31 @@ package engine.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import engine.events.Event;
+import engine.fieldsetting.Settable;
+import engine.fieldsetting.Triggerable;
 
-import engine.events.TimedEvent;
 
 /**
  * Manages the event progression for a level
- * 
+ *
  * @author Tom Puglisi
+ * @author Sierra Smith
+ * @author Cosette Goldstein
  *
  */
-public class StoryBoard {
-    private List<TimedEvent> eventList;
+@Settable
+public class StoryBoard extends Observable {
+    private List<Event> eventList;
 
-    public StoryBoard (TimedEvent ... events) {
-        eventList = new ArrayList<TimedEvent>();
+    public StoryBoard (Event ... events) {
+        eventList = new ArrayList<Event>();
         addEvent(events);
     }
 
-    public boolean addEvent (TimedEvent ... events) {
-        for (TimedEvent event : events) {
+    public boolean addEvent (Event ... events) {
+        for (Event event : events) {
             eventList.add(event);
         }
         return true;
@@ -28,24 +34,79 @@ public class StoryBoard {
 
     /**
      * Update all events
+     *
      * @return false if the StoryBoard has no more events to update
      */
     public boolean update () {
+        setChanged();
+        notifyObservers();
         if (eventList.size() == 0) {
             return false;
         }
-        eventList.stream().forEach(event -> updateEvent(event));
+        updateEvent(getCurrentEvent());
         return true;
     }
-    
+
     /**
      * If an event is complete, remove it from the list
+     *
      * @param event
      */
-    public void updateEvent(TimedEvent event) {
+    private void updateEvent (Event event) {
         if (!event.update()) {
             eventList.remove(event);
+            event.onCompleteAction();
+            setChanged();
+            notifyObservers();
         }
+    }
+
+    /**
+     *
+     * @return the next event in the List, if there is one
+     */
+    private Event getCurrentEvent () {
+        if (eventList.size() > 0) {
+            return eventList.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Sets the current event's start conditions to true, but only if they are not already true
+     */
+    @Triggerable
+    public void startNextEvent () {
+        Event currentEvent = getCurrentEvent();
+        if (currentEvent != null && !currentEvent.canStart()) {
+            currentEvent.setCanStart();
+        }
+    }
+
+    @Settable
+    public void setEvents (List<Event> events) {
+        eventList = events;
+    }
+
+    /**
+     * Returns true if the current event (which is being updated) can start. Assumes that if the
+     * current event's canStart() method evaluates to true, that it has started because we are
+     * calling update on it.
+     */
+    public boolean eventInProgress () {
+        if (getCurrentEvent() != null) {
+            return getCurrentEvent().canStart();
+        }
+        return false;
+    }
+
+    /**
+     * Returns the number of events left in the storyboard.
+     *
+     * @return no. of events left in storyboard
+     */
+    public int currentEventCount () {
+        return eventList.size();
     }
 
 }

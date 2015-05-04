@@ -1,16 +1,20 @@
 package gameworld;
 
-import java.util.Collection;
+import javafx.scene.Node;
 import engine.gameobject.GameObject;
+import engine.gameobject.PointSimple;
 import engine.pathfinding.Path;
 
 
-public interface GameWorld {
+public interface GameWorld extends ObjectCollection {
     public void updateGameObjects ();
-    public void moveObjects();
-    public void checkCollisions();
-    public void removeDeadObjects();
-    public Path getPathFinder ();
-    public Collection<GameObject> getGameObjects();
-    public void addObject (GameObject object);
+
+    public void addObject (GameObject toSpawn, PointSimple pixelCoords)
+            throws StructurePlacementException;
+
+    public boolean isPlaceable (Node n, PointSimple pixelCoords);
+    
+    public GameObject getObjectFromNode(Node n);
+    
+    public Path getPath();
 }

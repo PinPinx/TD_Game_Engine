@@ -1,31 +1,65 @@
 package engine.gameobject;
 
+import engine.fieldsetting.Settable;
 import engine.pathfinding.EndOfPathException;
 import engine.pathfinding.Path;
+import engine.pathfinding.PathFixed;
+
 
 /**
  * A mover that moves according to a pathfinder.
+ * 
  * @author Kaighn
  *
  */
-public class MoverPath implements Mover {
-	Path myPathFinder;
-	private double myDistance, mySpeed;
+@Settable
+public class MoverPath extends BasicMover {
+	Path myPath;
+	
+	public MoverPath() {
+	    super(0);
+	    this.setSpeed(1);
+	    myPath = new PathFixed();
+	}
 	
 	public MoverPath(Path pf, double speed){
-		myDistance = 0;
-		myPathFinder = pf;
-		mySpeed = speed;
+	        super(speed);
+		myPath = pf;
 	}
 	
+	 /**
+	  * Moves according to path i.e. returns correct point on the path
+	  */
 	@Override
-	public PointSimple move(PointSimple current) throws EndOfPathException {
-		myDistance += mySpeed;
-		return myPathFinder.getNextLocation(current, myDistance);
+	public PointSimple move(PointSimple current) throws EndOfPathException{
+	        myDistance += currentSpeed();
+	        return myPath.getNextLocation(myDistance, currentSpeed(), current);
 	}
-
+	
+	@Settable
+	public void setPath(Path path) {
+	    myPath = path;
+	}
+	
+	@Settable
+	public void setDistance(double distance) {
+	    myDistance = distance;
+	}
+	
+	/**
+	 * This sets the mover such that it will pick up on the path the spawner spawned this at. 
+	 */
+	@Override
+	public Mover clone(){
+	    MoverPath clone = new MoverPath(myPath, inherentSpeed);
+	    clone.myDistance = myDistance;
+	    return clone;
+	}
+	
+	@Settable
 	@Override
 	public void setSpeed(double speed) {
-		mySpeed = speed;
+	    super.setSpeed(speed);
 	}
+	
 }

@@ -6,11 +6,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
-public class HoverPicture {
+
+/**
+ * HoverPicture is a specific object used by ImagePanel. Each HoverPicture represents an image of
+ * the game type as well as an overlying text with the label. Text disappears when author hovers
+ * over the image.
+ *
+ * @author Brandon Choi
+ *
+ */
+
+public class HoverPicture implements UIObject {
 
     private static final double IMAGE_WIDTH = Main.SCREEN_WIDTH / 4;
     private static final double IMAGE_HEIGHT = Main.SCREEN_HEIGHT / 4;
-    
     private StackPane view;
     private ImageView image;
     private Text label;
@@ -27,17 +36,34 @@ public class HoverPicture {
         view.getChildren().addAll(i, label);
         setHoverEffect();
         selected = false;
-        setSelectEffect();
     }
 
-    public Node getView () {
+    /**
+     * returns the name of the HoverPicture
+     * 
+     * @return
+     */
+    public String getName () {
+        return label.getText();
+    }
+
+    @Override
+    public Node getObject () {
         return view;
     }
-    
-    public boolean selectStatus () {
+
+    /**
+     * returns whether or not the instance of HoverPicture has been selected
+     * 
+     * @return
+     */
+    public boolean selected () {
         return selected;
     }
 
+    /**
+     * sets up the hovering effect by altering the text's visibility
+     */
     private void setHoverEffect () {
         if (!selected) {
             image.setOnMouseEntered(e -> {
@@ -47,18 +73,29 @@ public class HoverPicture {
                 label.setVisible(true);
             });
         }
+        else {
+            label.setVisible(false);
+        }
     }
 
-    private void setSelectEffect () {
-        if (selected) {
-            view.setOnMouseClicked(e -> {
-                selected = false;
-            });
+    /**
+     * sets the select status of entire node
+     */
+    public void changeSelectEffect () {
+        selected = !selected;
+    }
+
+    /**
+     * alter disable status of the hover picture
+     */
+    public void alter () {
+        if (image.isDisable()) {
+            view.getChildren().add(label);
+            image.setDisable(false);
         }
         else {
-            view.setOnMouseClicked(e -> {
-                selected = true;
-            });
+            view.getChildren().remove(label);
+            image.setDisable(true);
         }
     }
 }

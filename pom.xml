@@ -30,10 +30,16 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>javafx</artifactId>
-            <version>8.0.31</version>
+            <version>${java.version}</version>
             <systemPath>${java.home}/lib/ext/jfxrt.jar</systemPath>
             <scope>system</scope>
         </dependency>
+        <dependency>  
+  			<groupId>duke-compsci308-spring2015.voogasalad_util</groupId>  
+  			<artifactId>voogasalad_util</artifactId>  
+  			<version>master-SNAPSHOT</version>  
+  		</dependency>  
+
     </dependencies>
 
     <build>
@@ -46,10 +52,10 @@
                 <configuration>
                     <encoding>iso-8859-1</encoding>
                     <excludes>
-                        <exclude>src/**/*Test.java</exclude>
+                        <!--<exclude>src/**/*Test.java</exclude>
                         <exclude>src/**/Test*.java</exclude>
                         <exclude>src/**/*Test*.java</exclude>
-                        <!--<exclude>src/usecases/**</exclude>-->
+                        <exclude>src/usecases/**</exclude>-->
                     </excludes>
                     <includes>
                         <include>src/**/*.java</include>
@@ -57,6 +63,25 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.4</version>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                    <sourceEncoding>UTF-8</sourceEncoding>
+                    <minimumTokens>25</minimumTokens>
+                    <targetJdk>1.8</targetJdk>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>cpd</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
