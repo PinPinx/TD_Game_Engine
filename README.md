@@ -2,6 +2,7 @@ TD Game Engine
 ===================
 
 **Game authoring environment launch:**  src/gae/gameView/Main.java
+
 **Game launch:** src/player/gamePlayer/PlayerMain.java
 
 
@@ -12,7 +13,7 @@ Only "BoxHead 2.0" of the games available required addition to code; the other g
 Basic Design
 -------------
 
-The commit 35aa32828a60210f2a19d09c562a243e082bddf7, "GameObject " shows the main design of objects in the game. Starting from the premise of towers that shot towers that shot towers, while also including the basic features of Bloons TD, composition became the obvious solution. After all, if an inheritance hierarchy involving, for example, towers and projectiles was created, what of the objects that were both towers and projectiles? Thus, ALL game objects have the potential to "fire", move, and  "collide" with other objects.
+This [commit](https://github.com/PinPinx/TD_Game_Engine/commit/35aa32828a60210f2a19d09c562a243e082bddf7/) shows the main design of objects in the game. Starting from the premise of towers that shot towers that shot towers, while also including the basic features of Bloons TD, composition became the obvious solution. After all, if an inheritance hierarchy involving, for example, towers and projectiles was created, what of the objects that were both towers and projectiles? Thus, ALL game objects have the potential to "fire", move, and  "collide" with other objects.
 
 Objects "collide" by imparting "Buffs". This "Buff" encapsulates the behavior of collisions- for example, an object could impart damage, a freeze, or a poison to among many possible buffs. The greatest example of the flexibility of this abstraction is the mind control interaction showcased in "BoxHead 2.0".
 
